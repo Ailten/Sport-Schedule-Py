@@ -26,6 +26,7 @@ class User(BaseWithPK):
     def age(self) -> int:
         today = datetime.now(timezone.utc).date()
         return today.year - self.birth_date.year - ((today.month, today.day) < (self.birth_date.month, self.birth_date.day))
+    
     @property
     def imc(self) -> float:
         return self.weight / (self.height ** 2)
