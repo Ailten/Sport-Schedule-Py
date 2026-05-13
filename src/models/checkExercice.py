@@ -19,4 +19,4 @@ class CheckExercice(Base):
 
     # ---> parameters.
     date_check: Mapped[datetime] = mapped_column(default=datetime.now(timezone.utc))
-    check_count: Mapped[int] = mapped_column(default=1)
+    #check_count: Mapped[int] = mapped_column(default=1)
