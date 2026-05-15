@@ -1,5 +1,5 @@
 from .database import BaseWithPK
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy import Enum as EnumSQL, CheckConstraint
 from datetime import date, timezone, datetime
 from .gender import Gender
@@ -30,5 +30,14 @@ class User(BaseWithPK):
     @property
     def imc(self) -> float:
         return self.weight / (self.height ** 2)
+    
+    # ---> constraints check.
+    __table_args__ = (
+        CheckConstraint(r'email ~ \'^.*@.*\..*$\'', name='email_format'),
+        CheckConstraint(r'phone_number ~ \'^[0-9- ]*$\'', name='phone_number_format'),
+        CheckConstraint('height > 0', name='height_min'),
+        CheckConstraint('weight > 0', name='weight_min'),
+        CheckConstraint('birth_date < CURRENT_DATE', name='birth_date_min')
+    )
     
 

@@ -1,6 +1,6 @@
 from .database import BaseWithPK
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import ForeignKey
+from sqlalchemy import ForeignKey, CheckConstraint
 
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
@@ -28,3 +28,10 @@ class ExerciceToDo(BaseWithPK):
     repetition: Mapped[int] = mapped_column(default=3)
     series: Mapped[int] = mapped_column(default=8)
     additional_weight: Mapped[float] = mapped_column(default=0.0)
+    
+    # ---> constraints check.
+    __table_args__ = (
+        CheckConstraint('days_of_week BETWEEN 0 AND 6 ', name='days_of_week_range'),
+        CheckConstraint('repetition > 0 ', name='repetition_min'),
+        CheckConstraint('series > 0 ', name='series_min')
+    )

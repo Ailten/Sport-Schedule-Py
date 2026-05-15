@@ -1,6 +1,6 @@
 from database import BaseWithPK
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import ForeignKey
+from sqlalchemy import ForeignKey, CheckConstraint
 from datetime import date
 
 from typing import TYPE_CHECKING
@@ -20,3 +20,8 @@ class Schedule(BaseWithPK):
     # ---> parameters.
     start_date: Mapped[date] = mapped_column()
     end_date: Mapped[date] = mapped_column(nullable=True, default=None)
+    
+    # ---> constraints check.
+    __table_args__ = (
+        CheckConstraint('end_date = NULL OR end_date > start_date', name='end_date_min')
+    )
