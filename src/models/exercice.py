@@ -8,6 +8,5 @@ class Exercice(BaseWithPK):
     description: Mapped[str] = mapped_column()
     url_details: Mapped[str] = mapped_column()
     url_image: Mapped[str] = mapped_column()
-    purcentage_body_weight_use: Mapped[float] = mapped_column()
     amplitude: Mapped[float] = mapped_column()
     is_minutes: Mapped[bool] = mapped_column()
