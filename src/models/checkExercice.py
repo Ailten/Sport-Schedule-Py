@@ -1,4 +1,4 @@
-from database import Base
+from .database import Base
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import ForeignKey
 from datetime import datetime, timezone
@@ -8,6 +8,8 @@ if TYPE_CHECKING:
     from .exerciceToDo import ExerciceToDo
 
 class CheckExercice(Base):
+    __tablename__ = 'check_exercices'
+    id: Mapped[int] = mapped_column(primary_key=True)
     
     # ---> FK and relations.
     exercice_to_do_id: Mapped[int] = mapped_column(ForeignKey('exercice_to_dos.id'))

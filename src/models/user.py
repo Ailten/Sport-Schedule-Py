@@ -1,4 +1,4 @@
-from .database import BaseWithPK
+from .database import Base
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy import Enum as EnumSQL, CheckConstraint
 from datetime import date, timezone, datetime
@@ -8,7 +8,9 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from schedule import Schedule
 
-class User(BaseWithPK):
+class User(Base):
+    __tablename__ = 'users'
+    id: Mapped[int] = mapped_column(primary_key=True)
 
     # ---> parameters.
     first_name: Mapped[str] = mapped_column()
@@ -32,12 +34,12 @@ class User(BaseWithPK):
         return self.weight / (self.height ** 2)
     
     # ---> constraints check.
-    __table_args__ = (
-        CheckConstraint(r'email ~ \'^.*@.*\..*$\'', name='email_format'),
-        CheckConstraint(r'phone_number ~ \'^[0-9- ]*$\'', name='phone_number_format'),
-        CheckConstraint('height > 0', name='height_min'),
-        CheckConstraint('weight > 0', name='weight_min'),
-        CheckConstraint('birth_date < CURRENT_DATE', name='birth_date_min')
-    )
+    __table_args__ = {
+        'email_format': CheckConstraint(r'email ~ \'^.*@.*\..*$\''),
+        'phone_number_format': CheckConstraint(r'phone_number ~ \'^[0-9- ]*$\''),
+        'height_min': CheckConstraint('height > 0'),
+        'weight_min': CheckConstraint('weight > 0'),
+        'birth_date_min': CheckConstraint('birth_date < CURRENT_DATE')
+    }
     
 

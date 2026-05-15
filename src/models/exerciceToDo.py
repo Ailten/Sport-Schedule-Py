@@ -1,4 +1,4 @@
-from .database import BaseWithPK
+from .database import Base
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import ForeignKey, CheckConstraint
 
@@ -7,7 +7,9 @@ if TYPE_CHECKING:
     from .schedule import Schedule
     from .exercice import Exercice
 
-class ExerciceToDo(BaseWithPK):
+class ExerciceToDo(Base):
+    __tablename__ = 'exercices_to_dos'
+    id: Mapped[int] = mapped_column(primary_key=True)
 
     # ---> FK and relations.
     schedule_id: Mapped[int] = mapped_column(ForeignKey('schedules.id'))
@@ -30,8 +32,8 @@ class ExerciceToDo(BaseWithPK):
     additional_weight: Mapped[float] = mapped_column(default=0.0)
     
     # ---> constraints check.
-    __table_args__ = (
-        CheckConstraint('days_of_week BETWEEN 0 AND 6 ', name='days_of_week_range'),
-        CheckConstraint('repetition > 0 ', name='repetition_min'),
-        CheckConstraint('series > 0 ', name='series_min')
-    )
+    __table_args__ = {
+        'days_of_week_range': CheckConstraint('days_of_week BETWEEN 0 AND 6 '),
+        'repetition_min': CheckConstraint('repetition > 0 '),
+        'series_min': CheckConstraint('series > 0 ')
+    }

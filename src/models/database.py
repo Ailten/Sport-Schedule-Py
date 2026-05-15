@@ -2,28 +2,26 @@
 import os
 from dotenv import load_dotenv
 from sqlalchemy import Column, ForeignKey, Table, create_engine
-from sqlalchemy.orm import DeclarativeBase, MappedAsDataclass, Mapped, mapped_column
+from sqlalchemy.orm import DeclarativeBase, MappedAsDataclass, Mapped, mapped_column, sessionmaker, Session
 import re
 
-load_dotenv()
+load_dotenv(dotenv_path='.env')
 
 class Base(DeclarativeBase, MappedAsDataclass):
-    @property
-    def __tablename__(self):
-        instance_name = self.__class__.__name__.lower()
-        name_snake = re.sub(r'(.)([A-Z])', r'\1_\2', instance_name).lower()  # camel to snake case.
-        return f'{name_snake}s'
-    
-class BaseWithPK(Base):
-    id: Mapped[int] = mapped_column(primary_key=True)
+    pass
 
-# create a connection (?).
-#engine = create_engine(os.getenv('DB_URL'), echo=True)
+def makeUrlDB() -> str:
 
-# TODO: what does this line ?
-#registrations = Table(
-#    "registrations",
-#    Base.metadata,
-#    Column("tournament_id", ForeignKey("tournaments.id")),
-#    Column("player_id", ForeignKey("players.id")),
-#)
+    # build url DB for connection.
+    db_url = os.getenv('DB_URL')
+    db_url = re.sub('<LOGIN>', os.getenv('DB_CONNECTION_LOGIN'), db_url)
+    db_url = re.sub('<PASSWORD>', os.getenv('DB_CONNECTION_PASSWORD'), db_url)
+    db_url = re.sub('<DB_NAME>', os.getenv('DB_NAME'), db_url)
+    return db_url
+
+def makeSession() -> Session:
+    # make engine.
+    engine = create_engine(makeUrlDB(), echo=True)
+
+    # return the session maked.
+    return sessionmaker(autocommit=False, autoflush=False, bind=engine)

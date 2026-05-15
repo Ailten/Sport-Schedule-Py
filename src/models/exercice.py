@@ -1,8 +1,10 @@
-from database import BaseWithPK
+from .database import Base
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy import CheckConstraint
 
-class Exercice(BaseWithPK):
+class Exercice(Base):
+    __tablename__ = 'exercices'
+    id: Mapped[int] = mapped_column(primary_key=True)
 
     # ---> parameters.
     name: Mapped[str] = mapped_column(unique=True)
@@ -13,9 +15,9 @@ class Exercice(BaseWithPK):
     is_minutes: Mapped[bool] = mapped_column(default=False)
     
     # ---> constraints check.
-    __table_args__ = (
-        CheckConstraint(r'name ~ \'[a-zA-Z_- ]{4,}\'', name='name_format'),
-        CheckConstraint(r'url_details ~ \'^https://.*(.html)\'', name='url_details_format'),
-        CheckConstraint(r'url_image ~ \'^https://.*(.png|.jpg|.jpeg|.webp)\'', name='url_image_format'),
-        CheckConstraint('amplitude BETWEEN 0.0 AND 1.0', name='amplitude_range'),
-    )
+    __table_args__ = {
+        'name_format': CheckConstraint(r'name ~ \'[a-zA-Z_- ]{4,}\''),
+        'url_details_format': CheckConstraint(r'url_details ~ \'^https://.*(.html)\''),
+        'url_image_format': CheckConstraint(r'url_image ~ \'^https://.*(.png|.jpg|.jpeg|.webp)\''),
+        'amplitude_range': CheckConstraint('amplitude BETWEEN 0.0 AND 1.0'),
+    }
