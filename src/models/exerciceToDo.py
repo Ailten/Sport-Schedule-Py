@@ -8,7 +8,7 @@ if TYPE_CHECKING:
     from .exercice import Exercice
 
 class ExerciceToDo(Base):
-    __tablename__ = 'exercices_to_dos'
+    __tablename__ = 'exercice_to_dos'
     id: Mapped[int] = mapped_column(primary_key=True)
 
     # ---> FK and relations.
@@ -37,3 +37,8 @@ class ExerciceToDo(Base):
         'repetition_min': CheckConstraint('repetition > 0 '),
         'series_min': CheckConstraint('series > 0 ')
     }
+    #__table_args__ = {
+    #    CheckConstraint('days_of_week BETWEEN 0 AND 6 ', name='days_of_week_range'),
+    #    CheckConstraint('repetition > 0 ', name='repetition_min'),
+    #    CheckConstraint('series > 0 ', name='series_min')
+    #}

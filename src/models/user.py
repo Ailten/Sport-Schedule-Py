@@ -1,6 +1,6 @@
 from .database import Base
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import Enum as EnumSQL, CheckConstraint, ForeignKey
+from sqlalchemy import Enum as EnumSQL, CheckConstraint, ForeignKey, text
 from datetime import date, timezone, datetime
 from .gender import Gender
 
@@ -43,11 +43,25 @@ class User(Base):
     
     # ---> constraints check.
     __table_args__ = {
-        'email_format': CheckConstraint(r'email ~ \'^.*@.*\..*$\''),
-        'phone_number_format': CheckConstraint(r'phone_number ~ \'^[0-9- ]*$\''),
+        'email_format': CheckConstraint('email ~ \'^.*@.*\..*$\''),
+        'phone_number_format': CheckConstraint('phone_number ~ \'^[0-9- ]*$\''),
         'height_min': CheckConstraint('height > 0'),
         'weight_min': CheckConstraint('weight > 0'),
         'birth_date_min': CheckConstraint('birth_date < CURRENT_DATE')
     }
+    #__table_args__ = (
+    #    CheckConstraint('email ~ \'^.*@.*\..*$\'', name='email_format'),
+    #    CheckConstraint('phone_number ~ \'^[0-9- ]*$\'', name='phone_number_format'),
+    #    CheckConstraint('height > 0', name='height_min'),
+    #    CheckConstraint('weight > 0', name='weight_min'),
+    #    CheckConstraint('birth_date < CURRENT_DATE', name='birth_date_min')
+    #)
+    #__table_args__ = {
+    #    'email_format': CheckConstraint(text('email ~ \'^.*@.*\..*$\'')),
+    #    'phone_number_format': CheckConstraint(text('phone_number ~ \'^[0-9- ]*$\'')),
+    #    'height_min': CheckConstraint(text('height > 0')),
+    #    'weight_min': CheckConstraint(text('weight > 0')),
+    #    'birth_date_min': CheckConstraint(text('birth_date < CURRENT_DATE'))
+    #}
     
 

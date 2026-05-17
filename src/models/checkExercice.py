@@ -14,8 +14,8 @@ class CheckExercice(Base):
     # ---> FK and relations.
     exercice_to_do_id: Mapped[int] = mapped_column(ForeignKey('exercice_to_dos.id'))
     exercice_to_do: Mapped[ExerciceToDo] = relationship(
-        foreign_keys=['user_id'], 
-        back_populates='schedules_of_user', 
+        foreign_keys=['exercice_to_do_id'], 
+        back_populates='check_for_exercice', 
         init=False
     )
 
