@@ -17,6 +17,7 @@ def makeUrlDB() -> str:
     db_url = re.sub('<LOGIN>', os.getenv('DB_CONNECTION_LOGIN'), db_url)
     db_url = re.sub('<PASSWORD>', os.getenv('DB_CONNECTION_PASSWORD'), db_url)
     db_url = re.sub('<DB_NAME>', os.getenv('DB_NAME'), db_url)
+    
     return db_url
 
 def makeSession() -> Session:
