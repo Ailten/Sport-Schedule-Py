@@ -1,16 +1,24 @@
 from .database import Base
-from sqlalchemy.orm import Mapped, mapped_column
-from sqlalchemy import Enum as EnumSQL, CheckConstraint
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy import Enum as EnumSQL, CheckConstraint, ForeignKey
 from datetime import date, timezone, datetime
 from .gender import Gender
 
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
-    from schedule import Schedule
+    from role import Role
 
 class User(Base):
     __tablename__ = 'users'
     id: Mapped[int] = mapped_column(primary_key=True)
+
+    # ---> FK and relations.
+    role_id: Mapped[int] = mapped_column(ForeignKey('roles.id'))
+    role: Mapped[Role] = relationship(
+        foreign_keys=['role_id'], 
+        back_populates='role_of_user', 
+        init=False
+    )
 
     # ---> parameters.
     first_name: Mapped[str] = mapped_column()
