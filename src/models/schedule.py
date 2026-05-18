@@ -24,9 +24,9 @@ class Schedule(Base):
     end_date: Mapped[date] = mapped_column(nullable=True, default=None)
     
     # ---> constraints check.
-    __table_args__ = {
-        'end_date_min': CheckConstraint('end_date = NULL OR end_date > start_date')
-    }
+    #__table_args__ = {
+    #    'end_date_min': CheckConstraint('end_date = NULL OR end_date > start_date')
+    #}
     #__table_args__ = (
     #    CheckConstraint('end_date = NULL OR end_date > start_date', name='end_date_min')
     #)

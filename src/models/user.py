@@ -57,13 +57,13 @@ class User(Base):
     #    CheckConstraint('weight > 0', name='weight_min'),
     #    CheckConstraint('birth_date < CURRENT_DATE', name='birth_date_min')
     #)
-    __table_args__ = {
-        'email_format': CheckConstraint(text('email ~ \'^.*@.*\..*$\'')),
-        'phone_number_format': CheckConstraint(text('phone_number ~ \'^[0-9- ]*$\'')),
-        'height_min': CheckConstraint(text('height > 0')),
-        'weight_min': CheckConstraint(text('weight > 0')),
-        'birth_date_min': CheckConstraint(text('birth_date < CURRENT_DATE'))
-    }
+    #__table_args__ = {
+    #    'email_format': CheckConstraint(text('email ~ \'^.*@.*\..*$\'')),
+    #    'phone_number_format': CheckConstraint(text('phone_number ~ \'^[0-9- ]*$\'')),
+    #    'height_min': CheckConstraint(text('height > 0')),
+    #    'weight_min': CheckConstraint(text('weight > 0')),
+    #    'birth_date_min': CheckConstraint(text('birth_date < CURRENT_DATE'))
+    #}
     #checks = Column(
     #    Unicode,
     #    CheckConstraint('email ~ \'^.*@.*\..*$\'', name='email_format'),
