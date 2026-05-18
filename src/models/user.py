@@ -30,7 +30,7 @@ class User(Base):
     weight: Mapped[float] = mapped_column()
     birth_date: Mapped[date] = mapped_column()
     gender: Mapped[Gender] = mapped_column(EnumSQL(Gender))
-    #url_profil_picture: Mapped[str] = mapped_column(nullable=True, default=None)
+    url_profil_picture: Mapped[str] = mapped_column(nullable=True, default=None)
 
     # ---> calculated parameters.
     @property
@@ -50,53 +50,4 @@ class User(Base):
     #    'weight_min': CheckConstraint('weight > 0'),
     #    'birth_date_min': CheckConstraint('birth_date < CURRENT_DATE')
     #}
-    #__table_args__ = (
-    #    CheckConstraint('email ~ \'^.*@.*\..*$\'', name='email_format'),
-    #    CheckConstraint('phone_number ~ \'^[0-9- ]*$\'', name='phone_number_format'),
-    #    CheckConstraint('height > 0', name='height_min'),
-    #    CheckConstraint('weight > 0', name='weight_min'),
-    #    CheckConstraint('birth_date < CURRENT_DATE', name='birth_date_min')
-    #)
-    #__table_args__ = {
-    #    'email_format': CheckConstraint(text('email ~ \'^.*@.*\..*$\'')),
-    #    'phone_number_format': CheckConstraint(text('phone_number ~ \'^[0-9- ]*$\'')),
-    #    'height_min': CheckConstraint(text('height > 0')),
-    #    'weight_min': CheckConstraint(text('weight > 0')),
-    #    'birth_date_min': CheckConstraint(text('birth_date < CURRENT_DATE'))
-    #}
-    #checks = Column(
-    #    Unicode,
-    #    CheckConstraint('email ~ \'^.*@.*\..*$\'', name='email_format'),
-    #    CheckConstraint('phone_number ~ \'^[0-9- ]*$\'', name='phone_number_format'),
-    #    CheckConstraint('height > 0', name='height_min'),
-    #    CheckConstraint('weight > 0', name='weight_min'),
-    #    CheckConstraint('birth_date < CURRENT_DATE', name='birth_date_min')
-    #)
-    
-    # alembic\versions\...
-    #op.create_check_constraint(
-    #    constraint_name='email_format',
-    #    table_name='users',
-    #    condition='email ~ \'^.*@.*\..*$\''
-    #)
-    #op.create_check_constraint(
-    #    constraint_name='phone_number_format',
-    #    table_name='users',
-    #    condition='phone_number ~ \'^[0-9- ]*$\''
-    #)
-    #op.create_check_constraint(
-    #    constraint_name='height_min',
-    #    table_name='users',
-    #    condition='height > 0'
-    #)
-    #op.create_check_constraint(
-    #    constraint_name='weight_min',
-    #    table_name='users',
-    #    condition='weight > 0'
-    #)
-    #op.create_check_constraint(
-    #    constraint_name='birth_date_min',
-    #    table_name='users',
-    #    condition='birth_date < CURRENT_DATE'
-    #)
 

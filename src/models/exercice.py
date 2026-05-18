@@ -22,9 +22,3 @@ class Exercice(Base):
     #    #'amplitude_range': CheckConstraint('amplitude BETWEEN 0.0 AND 1.0')
     #    'amplitude_range': CheckConstraint('amplitude >= 0.0 AND amplitude <= 1.0')
     #}
-    #__table_args__ = (
-    #    CheckConstraint('name ~ \'[a-zA-Z_- ]{4,}\'', name='name_format'),
-    #    CheckConstraint('url_details ~ \'^https://.*(.html)\'', name='url_details_format'),
-    #    CheckConstraint('url_image ~ \'^https://.*(.png|.jpg|.jpeg|.webp)\'', name='url_image_format'),
-    #    CheckConstraint('amplitude BETWEEN 0.0 AND 1.0', name='amplitude_range')
-    #)
