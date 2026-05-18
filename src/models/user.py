@@ -30,7 +30,7 @@ class User(Base):
     weight: Mapped[float] = mapped_column()
     birth_date: Mapped[date] = mapped_column()
     gender: Mapped[Gender] = mapped_column(EnumSQL(Gender))
-    url_profil_picture: Mapped[str] = mapped_column(nullable=True, default=None)
+    #url_profil_picture: Mapped[str] = mapped_column(nullable=True, default=None)
 
     # ---> calculated parameters.
     @property
