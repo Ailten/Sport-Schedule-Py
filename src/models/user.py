@@ -45,7 +45,7 @@ class User(Base):
     # ---> constraints check.
     #__table_args__ = {
     #    'email_format': CheckConstraint(r'email ~ \'^.*@.*\..*$\''),
-    #    'phone_number_format': CheckConstraint(r'phone_number ~ \'^[0-9- ]*$\''),
+    #    'phone_number_format': CheckConstraint(r'phone_number ~ \'^[0-9 +-]*$\''),
     #    'height_min': CheckConstraint('height > 0'),
     #    'weight_min': CheckConstraint('weight > 0'),
     #    'birth_date_min': CheckConstraint('birth_date < CURRENT_DATE')
