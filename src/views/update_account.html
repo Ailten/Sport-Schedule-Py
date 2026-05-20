@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sport Schedules</title>
+    <link href="../bootstrap/bootstrap.min.css" rel="stylesheet">
+    <script src="../bootstrap/bootstrap.bundle.min.js" type="text/javascript"></script>
+    <link href="../css/main.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container d-flex justify-content-center align-items-center container-center-h-big">
+    <div class="row w-100 justify-content-center">
+        <div class="col-md-6 col-lg-8">
+            
+            <div class="card shadow-sm border-0 px-4 py-4 rounded-3">
+                <div class="card-body">
+                    
+                    <h2 class="card-title text-center fw-bold mb-4 text-dark">Create Account</h2>
+                    
+                    <form action="#" method="POST">
+                        
+                        <div class="mb-3">
+                            <label for="first-name" class="form-label text-secondary fs-7">First Name</label>
+                            <input type="text" class="form-control form-control-lg" id="first-name" name="first-name" value="" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="last-name" class="form-label text-secondary fs-7">Last Name</label>
+                            <input type="text" class="form-control form-control-lg" id="last-name" name="last-name" value="" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="email" class="form-label text-secondary fs-7">Email</label>
+                            <input type="email" class="form-control form-control-lg" id="email" name="email" value="" required>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="phone-number" class="form-label text-secondary fs-7">Phone Number</label>
+                            <input type="text" class="form-control form-control-lg" id="phone-number" name="phone-number" value="" pattern="[0-9+_ -]*" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="height" class="form-label text-secondary fs-7">Height (meters)</label>
+                            <input type="number" class="form-control form-control-lg" id="height" name="height" value="" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="weight" class="form-label text-secondary fs-7">Weight (Kg)</label>
+                            <input type="number" class="form-control form-control-lg" id="weight" name="weight" value="" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="birth-date" class="form-label text-secondary fs-7">Birth Date</label>
+                            <input type="date" class="form-control form-control-lg" id="birth-date" name="birth-date" value="" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="birth-date" class="form-label text-secondary fs-7">Gender</label>
+                            <div class="mb-4 form-check disabled">
+                                <input class="form-check-input" type="radio" name="exampleRadios" id="gender" value="Male" checked>
+                                <label class="form-check-label" for="gender">
+                                    Male
+                                </label>
+                            </div>
+                            <div class="mb-4 form-check disabled">
+                                <input class="form-check-input" type="radio" name="exampleRadios" id="gender" value="Female">
+                                <label class="form-check-label" for="gender">
+                                    Female
+                                </label>
+                            </div>
+                            <div class="mb-4 form-check disabled">
+                                <input class="form-check-input" type="radio" name="exampleRadios" id="gender" value="Other">
+                                <label class="form-check-label" for="gender">
+                                    Other
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- TODO: button file to import profile picture -->
+
+                        
+                        <div class="mb-3 d-flex justify-content-center gap-2">
+                            <button type="cancel" class="btn btn-danger btn-lg fw-semibold w-50" onclick="history.back()">Cancel</button>
+                            <button type="submit" class="btn btn-success btn-lg fw-semibold w-50">Edit</button>
+                        </div>
+                        
+                    </form>
+                    
+                </div>
+            </div>
+            </div>
+    </div>
+</div>
+
+</body>
+</html>

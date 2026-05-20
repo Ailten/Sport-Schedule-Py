@@ -1,0 +1,78 @@
+
+body {
+    background-color: #f8f9fa;
+}
+
+
+.container-center-h-short {
+    min-height: 100vh;
+}
+.container-center-h-big {
+    padding-top: 5vw;
+}
+
+
+.navigation-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 100;
+    width: 17vw;
+}
+
+
+.main-container {
+    min-height: 100vh;
+    width: 82vw;
+}
+
+
+.profile-img {
+    width: 15vh;
+    height: 15vh;
+}
+
+.header-calendar-days > * {
+    background-color: black;
+    padding: 5px 0;
+}
+.header-calendar-days > *:first-child{
+    border-radius: 10px 0 0 0;
+}
+.header-calendar-days > *:last-child {
+    border-radius: 0 10px 0 0;
+}
+
+.day-card > .line-under-day {
+    font-size: 0.75rem;
+}
+.day-card > .line-under-day > *:nth-child(n+2) {
+    margin-left: 8px;
+}
+
+.day-card {
+    min-height: 90px;
+    height: 100%;
+    transition: transform 0.2s, background-color 0.2s;
+    cursor: pointer;
+}
+.day-card:hover {
+    transform: scale(1.03);
+    background-color: #f8f9fa;
+}
+.day-none {
+    min-height: 90px;
+    background-color: #e9ecef;
+    opacity: 0.6;
+}
+.today {
+    /*outline: 2px solid #0d6efd;*/
+    background-color: #d7f3ff;
+}
+.day-number {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+.day-card.week-end {
+    background-color: #edfaff;
+}
