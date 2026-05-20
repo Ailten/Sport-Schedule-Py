@@ -2,11 +2,13 @@
 window.addEventListener('load', _ => {
 
     // set default calendar.
-    currentMonth = new Date();
+    currentDate = new Date();
     monthPicker = document.getElementById('month-picker');
-    monthPicker.value = `${currentMonth.getFullYear()}-${(currentMonth.getMonth() +1)}`;
-    currentMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() +1, currentMonth.getDate());  // ajust month from starting to 0.
-    generateCalendar(currentMonth);
+    currentMonth = currentDate.getMonth() +1;  // ajust month from starting to 0.
+    currentMonthStr = (currentMonth < 10 ? '0': '') + currentMonth;
+    monthPicker.value = `${currentDate.getFullYear()}-${currentMonthStr}`;
+    currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth() +1, currentDate.getDate());
+    generateCalendar(currentDate);
 
     // set event change, to actualise calendar.
     monthPicker.addEventListener('change', (evnt) => {
@@ -46,7 +48,7 @@ function generateCalendar(datePick) {
         if (day === dateToday.getDate() && month === dateToday.getMonth() && year === dateToday.getFullYear()) {
             dayCell.classList.add('today');
         } 
-        else if (countDayOfWeek % 7 >= 5){
+        if (countDayOfWeek % 7 >= 5){
             dayCell.classList.add('week-end');
         }
         
