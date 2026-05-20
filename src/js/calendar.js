@@ -22,7 +22,7 @@ window.addEventListener('load', _ => {
 function generateCalendar(datePick) {
 
     // get dom container calendar.
-    let calendarGrid = document.getElementById('calendarGrid');
+    let calendarGrid = document.getElementById('calendar-grid');
     calendarGrid.innerText = '';
 
     // get year and month from obj date.
