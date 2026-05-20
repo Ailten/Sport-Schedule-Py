@@ -82,3 +82,9 @@ div.header-calendar-days {
 .week-end {
     background-color: #edfaff;
 }
+
+
+.statistics-container {
+    width: 82vw;
+    margin-top: 5vh;
+}
