@@ -13,6 +13,13 @@ class UserService(ServiceWithPK):
     # override create, to hash password before.
     def create(self, user_to_add: User) -> User:
         password_hash = self.__password_hasher.hash(user_to_add.password)
+
+        print('-----------------------------')
+        print(password_hash)
+        print(type(password_hash))
+        if user_to_add.first_name == 'Test1234':
+            raise Exception('---')
+        
         user_to_add.password = password_hash
         return super().create(user_to_add)
 

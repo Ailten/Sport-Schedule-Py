@@ -1,4 +1,4 @@
-from service import Service
+from .service import Service
 from sqlalchemy.orm import Session
 from ..models.checkExercice import CheckExercice
 from ..models.exerciceToDo import ExerciceToDo

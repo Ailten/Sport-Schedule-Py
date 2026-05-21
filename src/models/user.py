@@ -10,13 +10,11 @@ if TYPE_CHECKING:
 
 class User(Base):
     __tablename__ = 'users'
-    id: Mapped[int] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True, init=False)
 
     # ---> FK and relations.
     role_id: Mapped[int] = mapped_column(ForeignKey('roles.id'))
     role: Mapped[Role] = relationship(
-        foreign_keys=['role_id'], 
-        back_populates='role_of_user', 
         init=False
     )
 

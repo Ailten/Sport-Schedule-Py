@@ -9,13 +9,11 @@ if TYPE_CHECKING:
 
 class CheckExercice(Base):
     __tablename__ = 'check_exercices'
-    id: Mapped[int] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True, init=False)
     
     # ---> FK and relations.
     exercice_to_do_id: Mapped[int] = mapped_column(ForeignKey('exercice_to_dos.id'))
     exercice_to_do: Mapped[ExerciceToDo] = relationship(
-        foreign_keys=['exercice_to_do_id'], 
-        back_populates='check_for_exercice', 
         init=False
     )
 

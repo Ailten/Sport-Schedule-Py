@@ -1,4 +1,7 @@
 
+from .database import makeSession
+
+from .gender import Gender
 
 from .user import User
 from .schedule import Schedule

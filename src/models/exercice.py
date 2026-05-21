@@ -4,7 +4,7 @@ from sqlalchemy import CheckConstraint
 
 class Exercice(Base):
     __tablename__ = 'exercices'
-    id: Mapped[int] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True, init=False)
 
     # ---> parameters.
     name: Mapped[str] = mapped_column(unique=True)

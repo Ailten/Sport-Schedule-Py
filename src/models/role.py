@@ -4,7 +4,7 @@ from .database import Base
 
 class Role(Base):
     __tablename__ = 'roles'
-    id: Mapped[int] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True, init=False)
     
     # ---> parameters.
     name: Mapped[str] = mapped_column(unique=True)

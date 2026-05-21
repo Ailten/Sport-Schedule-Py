@@ -9,13 +9,11 @@ if TYPE_CHECKING:
 
 class Schedule(Base):
     __tablename__ = 'schedules'
-    id: Mapped[int] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True, init=False)
     
     # ---> FK and relations.
     user_id: Mapped[int] = mapped_column(ForeignKey('users.id'))
     user: Mapped[User] = relationship(
-        foreign_keys=['user_id'], 
-        back_populates='schedules_of_user', 
         init=False
     )
 

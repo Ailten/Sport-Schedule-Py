@@ -1,4 +1,4 @@
-from service import ServiceWithPK
+from .service import ServiceWithPK
 from sqlalchemy.orm import Session
 from ..models.role import Role
 

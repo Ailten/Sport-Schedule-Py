@@ -20,9 +20,16 @@ def makeUrlDB() -> str:
     
     return db_url
 
-def makeSession() -> Session:
-    # make engine.
-    engine = create_engine(makeUrlDB(), echo=True)
+# make engine.
+engine = create_engine(makeUrlDB(), echo=True)
+session_maker = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-    # return the session maked.
-    return sessionmaker(autocommit=False, autoflush=False, bind=engine)
+def makeSession():
+    session = session_maker()
+    try:
+        yield session
+    except:
+        session.rollback()
+        raise
+    finally:
+        session.close()

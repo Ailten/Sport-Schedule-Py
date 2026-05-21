@@ -9,19 +9,15 @@ if TYPE_CHECKING:
 
 class ExerciceToDo(Base):
     __tablename__ = 'exercice_to_dos'
-    id: Mapped[int] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True, init=False)
 
     # ---> FK and relations.
     schedule_id: Mapped[int] = mapped_column(ForeignKey('schedules.id'))
     schedule: Mapped[Schedule] = relationship(
-        foreign_keys=['schedule_id'], 
-        back_populates='exercice_to_do_for_schedule', 
         init=False
     )
     exercice_id: Mapped[int] = mapped_column(ForeignKey('exercices.id'))
     exercice: Mapped[Exercice] = relationship(
-        foreign_keys=['exercice_id'], 
-        back_populates='exercice_to_do_exercice', 
         init=False
     )
 
