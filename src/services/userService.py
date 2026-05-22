@@ -1,10 +1,9 @@
 from .service import ServiceWithPK
 from sqlalchemy.orm import Session
 from ..models.user import User
-from passlib.context import CryptContext
+from ..utils.Crypt import Crypt
 
 class UserService(ServiceWithPK):
-    __password_hasher = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
     def __init__(self, session_db: Session):
         super().__init__(session_db, User)
@@ -12,15 +11,7 @@ class UserService(ServiceWithPK):
 
     # override create, to hash password before.
     def create(self, user_to_add: User) -> User:
-        password_hash = self.__password_hasher.hash(user_to_add.password)
-
-        print('-----------------------------')
-        print(password_hash)
-        print(type(password_hash))
-        if user_to_add.first_name == 'Test1234':
-            raise Exception('---')
-        
-        user_to_add.password = password_hash
+        user_to_add.password = Crypt.hashStr(user_to_add.password)
         return super().create(user_to_add)
 
     def getUserByLogin(self, email: str) -> User|None:
@@ -30,7 +21,7 @@ class UserService(ServiceWithPK):
         user_get = self.getUserByLogin(email)
         if user_get == None:
             return None
-        if not self.__password_hasher.verify(password, user_get.password):
+        if not Crypt.compareHash(password, user_get.password):
             return None
         return user_get
     

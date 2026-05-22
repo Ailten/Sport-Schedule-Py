@@ -27,12 +27,12 @@ def addUser(
     """
     Create a new User.
     """
-    #user = UserFormDto.toUser(user_form)
-
     user = user_service.readById(1)
     user.password = 'Test1234'
-    
-    return user_service.create(user)
+    user.email = 'aaa.bbb@gmail.com'
+
+    user_service.create(user)
+    return user
 
 
 @user_router.get('/readById')
