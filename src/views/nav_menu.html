@@ -29,29 +29,49 @@
             <aside class="col-md-3 col-lg-2 bg-white sidebar-right p-3 d-flex flex-column align-items-center h-100 navigation-menu">
                 
                 <div class="text-center my-2">
-                    <img src="http://127.0.0.1:8000/public/img/userPfp/{{ request.session['user'].url_profil_picture | default('default_user') }}.png" 
+                    {% set url_profil_picture = request.session.get('user').url_profil_picture or 'default_user' %}
+                    <img src="{{ url_for('public', path='img/userPfp/' ~ url_profil_picture ~ '.png') }}"
                          alt="Photo de profil" 
                          class="rounded-circle profile-img border border-3 border-primary shadow-sm">
-                    <h5 class="mt-2 mb-0 text-dark fw-bold">first-name last-name</h5>
-                    <small class="text-muted">Role</small>
+                    <h5 class="mt-2 mb-0 text-dark fw-bold">
+                        {{request.session.get('user').first_name}} 
+                        {{request.session.get('user').last_name}}
+                    </h5>
+                    {% if request.session.get('user').role_name != 'client' %}
+                    <small class="text-muted">
+                        {{request.session.get('user').role_name}}
+                    </small>
+                    {% endif %}
                 </div>
 
                 <hr class="w-100 my-2">
 
                 <nav class="w-100 d-flex gap-2 align-items-start nav nav-pills flex-column">
-                    <button class="btn btn-primary text-start w-100 active" type="button" onclick="window.location.href='schedule.html'">
+                    <button class="btn btn-primary text-start w-100 border-0 
+                                   {% if current_page == 'schedule' %}active{% endif %}" 
+                                   type="button" 
+                                   onclick="window.location.href='schedule.html'">
                         <i class="bi bi-calendar me-2"></i>
                         Schedules
                     </button>
-                    <button class="btn btn-outline-secondary text-start w-100 border-0" type="button" onclick="window.location.href='create_schedule.html'">
+                    <button class="btn btn-outline-secondary text-start w-100 border-0
+                                   {% if current_page == 'create_schedule' %}active{% endif %}" 
+                                   type="button"
+                                   onclick="window.location.href='create_schedule.html'">
                         <i class="bi bi-calendar-plus me-2"></i>
                         New Schedules
                     </button>
-                    <button class="btn btn-outline-secondary text-start w-100 border-0" type="button" onclick="window.location.href='statistics.html'">
+                    <button class="btn btn-outline-secondary text-start w-100 border-0
+                                   {% if current_page == 'statistics' %}active{% endif %}" 
+                                   type="button"
+                                   onclick="window.location.href='statistics.html'">
                         <i class="bi bi-graph-up me-2"></i>
                         Statistics
                     </button>
-                    <button class="btn btn-outline-secondary text-start w-100 border-0" type="button" onclick="window.location.href='update_account.html'">
+                    <button class="btn btn-outline-secondary text-start w-100 border-0
+                                   {% if current_page == 'update_account' %}active{% endif %}" 
+                                   type="button"
+                                   onclick="window.location.href='update_account.html'">
                         <i class="bi bi-gear me-2"></i>
                         Parameters
                     </button>

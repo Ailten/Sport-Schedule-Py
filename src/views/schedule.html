@@ -1,9 +1,12 @@
-{% extends 'nav_menu' %}
+{% extends 'nav_menu.html' %}
 
 
 {% block links %}
 <script src="http://127.0.0.1:8000/public/js/calendar.js" type="text/javascript"></script>
 {% endblock links %}
+
+
+{% set current_page = 'schedule' %}
 
 
 {% block main %}
