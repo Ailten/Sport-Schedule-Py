@@ -11,7 +11,6 @@ load_dotenv(dotenv_path='.env')
 
 app = FastAPI()
 
-#app.add_middleware(sessions.SessionMiddleware(session_cookie=True, secret_key='secret_key_IDK'))
 app.add_middleware(
     sessions.SessionMiddleware, 
     secret_key=os.getenv('STARLETTE_SECRET_KEY')

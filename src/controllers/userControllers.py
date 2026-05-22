@@ -1,15 +1,13 @@
 from fastapi import APIRouter, Request, Depends, Form
-
 from ..dto import UserLoginFormDto
-from ..models import User, makeSession
-from sqlalchemy.orm import Session as SqlSession
+from ..models import User
 from ..dto import UserPrintDto, UserFormDto
 from ..services import UserService
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse
+from datetime import datetime
 
 user_router = APIRouter(prefix='/user', tags=['User'])
-
 template = Jinja2Templates(directory='src/views')
 
 
@@ -61,8 +59,9 @@ def handleLogin(
 
     # save user in session.
     request.session['user'] = dict(UserPrintDto.fromUser(user))
-
-    return template.TemplateResponse(name='schedule.html', request=request)
+    
+    # redirect to schedule.
+    return RedirectResponse(url="/schedule/printMonth")
 
 @user_router.post('/logout')
 def logout(

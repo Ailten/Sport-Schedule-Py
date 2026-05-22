@@ -14,6 +14,7 @@ class ExerciceToDo(Base):
     # ---> FK and relations.
     schedule_id: Mapped[int] = mapped_column(ForeignKey('schedules.id'))
     schedule: Mapped[Schedule] = relationship(
+        back_populates='exercice_to_dos',
         init=False
     )
     exercice_id: Mapped[int] = mapped_column(ForeignKey('exercices.id'))

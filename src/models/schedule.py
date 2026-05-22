@@ -6,6 +6,7 @@ from datetime import date
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from .user import User
+    from src.models.exerciceToDo import ExerciceToDo
 
 class Schedule(Base):
     __tablename__ = 'schedules'
@@ -16,6 +17,7 @@ class Schedule(Base):
     user: Mapped[User] = relationship(
         init=False
     )
+    exercice_to_dos: list['ExerciceToDo'] = relationship(back_populates='schedule')
 
     # ---> parameters.
     start_date: Mapped[date] = mapped_column()

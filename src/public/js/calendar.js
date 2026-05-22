@@ -1,5 +1,7 @@
 
 window.addEventListener('load', _ => {
+    
+    return;
 
     // set default calendar.
     currentDate = new Date();
