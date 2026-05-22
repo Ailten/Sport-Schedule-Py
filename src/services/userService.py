@@ -1,5 +1,6 @@
 from .service import ServiceWithPK
 from sqlalchemy.orm import Session
+from sqlalchemy import func
 from ..models.user import User
 from ..utils.Crypt import Crypt
 
@@ -15,6 +16,7 @@ class UserService(ServiceWithPK):
         return super().create(user_to_add)
 
     def getUserByLogin(self, email: str) -> User|None:
+        email = email.lower()
         return self._session_db.query(User).filter(User.email == email).first()
     
     def getUserByLoginPassword(self, email: str, password: str) -> User|None:

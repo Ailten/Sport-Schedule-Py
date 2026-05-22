@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Sport Schedules</title>
-    <link href="../bootstrap/bootstrap.min.css" rel="stylesheet">
-    <script src="../bootstrap/bootstrap.bundle.min.js" type="text/javascript"></script>
-    <link href="../css/main.css" rel="stylesheet">
+    <link href="http://127.0.0.1:8000/public/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <script src="http://127.0.0.1:8000/public/bootstrap/bootstrap.bundle.min.js" type="text/javascript"></script>
+    <link href="http://127.0.0.1:8000/public/css/main.css" rel="stylesheet">
 </head>
 <body>
 
@@ -18,11 +18,11 @@
                     
                     <h2 class="card-title text-center fw-bold mb-4 text-dark">Connection</h2>
                     
-                    <form action="#" method="POST">
+                    <form action="/user/logIn" method="POST">
                         
                         <div class="mb-3">
                             <label for="email" class="form-label text-secondary fs-7">Email</label>
-                            <input type="email" class="form-control form-control-lg" id="email" name="email" placeholder="name@gmail.com" required>
+                            <input type="email" class="form-control form-control-lg" id="email" name="login" placeholder="name@gmail.com" required>
                         </div>
                         
                         <div class="mb-4">
