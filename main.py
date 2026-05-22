@@ -40,4 +40,4 @@ def index(
     """
     main endpoint, redirect to page login.
     """
-    return RedirectResponse(url="/user/logIn")
+    return RedirectResponse(url="/user/login")

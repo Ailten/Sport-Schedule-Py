@@ -36,23 +36,23 @@ def getUserById(
     return user_service.readById(user_id)
 
 
-@user_router.get('/logIn')
+@user_router.get('/login')
 def login(
     request: Request
 ):
     """
-    Get User by login and password.
+    get page login.
     """
     return template.TemplateResponse(name='login.html', request=request)
 
-@user_router.post('/logIn')
+@user_router.post('/login')
 def handleLogin(
     request: Request, 
     user_login_form: UserLoginFormDto = Form(), 
     user_service: UserService=Depends(UserService.getService),
 ):
     """
-    Get User by login and password.
+    Handle login form, to redirect to schedule (or back to login page with error).
     """
     user = user_service.getUserByLoginPassword(user_login_form.login, user_login_form.password)
     if not user:
@@ -62,7 +62,19 @@ def handleLogin(
     # save user in session.
     request.session['user'] = dict(UserPrintDto.fromUser(user))
 
-    return RedirectResponse('/user/readAll')
+    return template.TemplateResponse(name='schedule.html', request=request)
+
+@user_router.post('/logout')
+def logout(
+    request: Request
+):
+    """
+    Remove user in session, and redirect to login page.
+    """
+    # remove user from session.
+    request.session.pop('user', None)
+
+    return RedirectResponse(url="/user/login")
     
 
 @user_router.post('/create')
