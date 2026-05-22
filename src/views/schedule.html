@@ -13,14 +13,16 @@
 <div class="container py-5">
     <div class="card shadow-sm p-4 bg-white">
         
-        <div class="row g-3 align-items-center mb-2">
-            <div class="col-auto">
-                <label for="month-picker" class="form-label fw-bold mb-0">Month :</label>
+        <form id="form-actualise-schedule" action="" method="get">
+            <div class="row g-3 align-items-center mb-2">
+                <div class="col-auto">
+                    <label for="month-picker" class="form-label fw-bold mb-0">Month :</label>
+                </div>
+                <div class="col-auto">
+                    <input type="month" id="month-picker" name="month_ask" class="form-control" value="{{month_ask}}">
+                </div>
             </div>
-            <div class="col-auto">
-                <input type="month" id="month-picker" name="month-picker" class="form-control" value="{{month_ask}}">
-            </div>
-        </div>
+        </form>
 
         <div class="row row-cols-7 text-center fw-bold text-white rounded-top py-2 g-0 header-calendar-days">
             <div>Monday</div>
@@ -38,8 +40,19 @@
                     <div class="day-none border rounded m-1"></div>
                 {% else %}
                     <div class="card day-card border rounded m-1 p-2 d-flex flex-column justify-content-between
-                                {% if (i-days_skip_first_week) == today_day and is_current_month %}today{% endif %}
+                                {% if (i - days_skip_first_week + 1) == today_day and is_current_month %}today{% endif %}
                                 {% if i % 7 > 4 %}week-end{% endif %}">
+                        <div class="text-startday-number">
+                            {{ i - days_skip_first_week + 1}}
+                        </div>
+                        <div class="text-end text-muted small line-under-day">
+                            <div>
+                                <i class="bi bi-check-lg"></i>
+                            </div>
+                            <div>
+                                <i class="bi bi-three-dots"></i>
+                            </div>
+                        </div>
                     </div>
                 {% endif %}
             {% endfor %}

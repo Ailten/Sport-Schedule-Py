@@ -61,7 +61,7 @@ def handleLogin(
     request.session['user'] = dict(UserPrintDto.fromUser(user))
     
     # redirect to schedule.
-    return RedirectResponse(url="/schedule/printMonth")
+    return RedirectResponse(url="/schedule/printMonth", status_code=303)
 
 @user_router.post('/logout')
 def logout(

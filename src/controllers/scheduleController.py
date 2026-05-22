@@ -10,7 +10,7 @@ schedule_router = APIRouter(prefix='/schedule', tags=['Schedule'])
 template = Jinja2Templates(directory='src/views')
 
 
-@schedule_router.post('/printMonth')
+@schedule_router.get('/printMonth')
 def printMonth(
     request: Request, 
     user_id: int|None = None, 

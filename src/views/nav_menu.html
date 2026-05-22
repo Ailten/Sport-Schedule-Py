@@ -42,6 +42,7 @@
                         {{request.session.get('user').role_name}}
                     </small>
                     {% endif %}
+                    <input type="hidden" value="{{request.session.get('user').id}}" id="user_id"/>
                 </div>
 
                 <hr class="w-100 my-2">
