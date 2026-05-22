@@ -30,7 +30,7 @@ class ExerciceToDo(Base):
     
     # ---> constraints check.
     #__table_args__ = {
-    #    'days_of_week_range': CheckConstraint('days_of_week BETWEEN 0 AND 6 '),
+    #    'days_of_week_range': CheckConstraint('days_of_week BETWEEN 1 AND 127 '),
     #    'repetition_min': CheckConstraint('repetition > 0 '),
     #    'series_min': CheckConstraint('series > 0 ')
     #}

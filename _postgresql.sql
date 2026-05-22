@@ -60,3 +60,9 @@ insert into exercices(id, name, description, url_details, url_image, amplitude, 
 (5, 'Burpees', null, null, null, 1.0, false);
 select * from exercices;
 
+truncate table schedules restart identity cascade;
+insert into schedules(id, user_id, start_date, end_date) values
+(1, 1, '2026-06-01'::date, Null);
+
+truncate table exercice_to_dos restart identity cascade;
+insert into exercice_to_dos(id, schedule_id, exercice_id, days_of_week, )
