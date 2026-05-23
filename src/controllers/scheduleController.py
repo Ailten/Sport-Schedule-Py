@@ -33,7 +33,6 @@ def printMonth(
 
     # take user log by default.
     if user_id == None:
-        print(request.session.get('user'))
         user_id = request.session.get('user').get('id')
 
     # take current month by default.
@@ -56,8 +55,8 @@ def printMonth(
 
     # get all schedule for the month ask.
     schedules_use_in_month = schedule_service.getMonthOfAnUser(user_id, year, month)
-    
-    return template.TemplateResponse(name='schedule.html', request=request, context={
+
+    context = {
         'month_ask': month_ask,  # string value, to assigne in input.
         'days_skip_first_week': days_skip_first_week, 
         'days_in_month': days_in_month,
@@ -66,7 +65,12 @@ def printMonth(
         'is_current_month': is_current_month,
 
         'schedules': schedules_use_in_month
-    })
+    }
+    errors = request.session.get('errors', None)  # include errors from redirction (if has one).
+    if errors != None:
+        del request.session['errors']
+        context['errors'] = errors
+    return template.TemplateResponse(name='schedule.html', request=request, context=context)
 
 @schedule_router.get('/create')
 def createSchedule(

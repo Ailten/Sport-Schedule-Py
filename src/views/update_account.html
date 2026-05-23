@@ -1,14 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Sport Schedules</title>
-    <link href="http://127.0.0.1:8000/public/bootstrap/bootstrap.min.css" rel="stylesheet">
-    <script src="http://127.0.0.1:8000/public/bootstrap/bootstrap.bundle.min.js" type="text/javascript"></script>
-    <link href="http://127.0.0.1:8000/public/css/main.css" rel="stylesheet">
-</head>
-<body>
+{% extends 'base_page.html' %}
 
+
+{% block links_base %}
+<script src="http://127.0.0.1:8000/public/js/userForm.js" type="text/javascript"></script>
+{% endblock links_base %}
+
+
+{% set current_page = 'update_account' %}
+
+
+{% block main_base %}
+{% include 'errors_pop_up.html' %}
 <div class="container d-flex justify-content-center align-items-center container-center-h-big">
     <div class="row w-100 justify-content-center">
         <div class="col-md-6 col-lg-8">
@@ -16,68 +18,123 @@
             <div class="card shadow-sm border-0 px-4 py-4 rounded-3">
                 <div class="card-body">
                     
-                    <h2 class="card-title text-center fw-bold mb-4 text-dark">Create Account</h2>
+                    <h2 class="card-title text-center fw-bold mb-4 text-dark">Edit Account</h2>
                     
                     <form action="#" method="POST">
                         
                         <div class="mb-3">
                             <label for="first-name" class="form-label text-secondary fs-7">First Name</label>
-                            <input type="text" class="form-control form-control-lg" id="first-name" name="first-name" value="" required>
+                            <input type="text" 
+                                   class="form-control form-control-lg" 
+                                   id="first-name" 
+                                   name="first_name" 
+                                   placeholder="first-name" 
+                                   value="{{user_params.first_name}}" 
+                                   required>
                         </div>
                         
                         <div class="mb-3">
                             <label for="last-name" class="form-label text-secondary fs-7">Last Name</label>
-                            <input type="text" class="form-control form-control-lg" id="last-name" name="last-name" value="" required>
+                            <input type="text" 
+                                   class="form-control form-control-lg" 
+                                   id="last-name" 
+                                   name="last_name" 
+                                   placeholder="last-name" 
+                                   value="{{user_params.last_name}}" 
+                                   required>
                         </div>
                         
                         <div class="mb-3">
                             <label for="email" class="form-label text-secondary fs-7">Email</label>
-                            <input type="email" class="form-control form-control-lg" id="email" name="email" value="" required>
+                            <input type="email" 
+                                   class="form-control form-control-lg" 
+                                   id="email" 
+                                   name="email" 
+                                   placeholder="email" 
+                                   value="{{user_params_email}}" 
+                                   disabled>
                         </div>
                         
                         <div class="mb-4">
                             <label for="phone-number" class="form-label text-secondary fs-7">Phone Number</label>
-                            <input type="text" class="form-control form-control-lg" id="phone-number" name="phone-number" value="" pattern="[0-9+_ -]*" required>
+                            <input type="text" 
+                                   class="form-control form-control-lg" 
+                                   id="phone-number" 
+                                   name="phone_number" 
+                                   placeholder="000-00-00-00" 
+                                   pattern="[0-9 +-]*" 
+                                   value="{{user_params.phone_number}}" 
+                                   required>
                         </div>
 
                         <div class="mb-4">
                             <label for="height" class="form-label text-secondary fs-7">Height (meters)</label>
-                            <input type="number" class="form-control form-control-lg" id="height" name="height" value="" required>
+                            <input type="number" 
+                                   class="form-control form-control-lg" 
+                                   id="height" 
+                                   name="height" 
+                                   placeholder="1.75" 
+                                   step="0.01" 
+                                   value="{{user_params.height}}" 
+                                   required>
                         </div>
 
                         <div class="mb-4">
                             <label for="weight" class="form-label text-secondary fs-7">Weight (Kg)</label>
-                            <input type="number" class="form-control form-control-lg" id="weight" name="weight" value="" required>
+                            <input type="number" 
+                                   class="form-control form-control-lg" 
+                                   id="weight" 
+                                   name="weight" 
+                                   placeholder="85" 
+                                   step="0.1" 
+                                   value="{{user_params.weight}}" 
+                                   required>
                         </div>
 
                         <div class="mb-4">
                             <label for="birth-date" class="form-label text-secondary fs-7">Birth Date</label>
-                            <input type="date" class="form-control form-control-lg" id="birth-date" name="birth-date" value="" required>
+                            <input type="date" 
+                                   class="form-control form-control-lg" 
+                                   id="birth-date" 
+                                   name="birth_date" 
+                                   value="{{user_params.birth_date}}" 
+                                   required>
                         </div>
 
                         <div class="mb-4">
+                            <input type="hidden" value="{{user_params.gender}}" id="gender-from-dto">
                             <label for="birth-date" class="form-label text-secondary fs-7">Gender</label>
-                            <div class="mb-4 form-check disabled">
-                                <input class="form-check-input" type="radio" name="exampleRadios" id="gender" value="Male" checked>
-                                <label class="form-check-label" for="gender">
+                            <div class="mb-4 form-check">
+                                <input class="form-check-input" 
+                                       type="radio" 
+                                       name="gender" 
+                                       id="gender-male" 
+                                       value="1">
+                                <label class="form-check-label" for="gender-male">
                                     Male
                                 </label>
                             </div>
-                            <div class="mb-4 form-check disabled">
-                                <input class="form-check-input" type="radio" name="exampleRadios" id="gender" value="Female">
-                                <label class="form-check-label" for="gender">
+                            <div class="mb-4 form-check">
+                                <input class="form-check-input" 
+                                       type="radio" 
+                                       name="gender" 
+                                       id="gender-female" 
+                                       value="2">
+                                <label class="form-check-label" for="gender-female">
                                     Female
                                 </label>
                             </div>
-                            <div class="mb-4 form-check disabled">
-                                <input class="form-check-input" type="radio" name="exampleRadios" id="gender" value="Other">
-                                <label class="form-check-label" for="gender">
+                            <div class="mb-4 form-check">
+                                <input class="form-check-input" 
+                                       type="radio" 
+                                       name="gender" 
+                                       id="gender-other" 
+                                       value="3">
+                                <label class="form-check-label" for="gender-other">
                                     Other
                                 </label>
                             </div>
                         </div>
-
-                        <!-- TODO: button file to import profile picture -->
 
                         
                         <div class="mb-3 d-flex justify-content-center gap-2">
@@ -92,6 +149,4 @@
             </div>
     </div>
 </div>
-
-</body>
-</html>
+{% endblock main_base %}

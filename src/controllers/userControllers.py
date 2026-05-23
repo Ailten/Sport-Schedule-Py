@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Request, Depends, Form
 from ..dto import UserLoginFormDto
 from ..models import User
-from ..dto import UserPrintDto, UserCreateDto
+from ..dto import UserPrintDto, UserCreateDto, UserUpdateDto
 from ..services import UserService
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse
@@ -64,7 +64,7 @@ def handleLogin(
     request.session['user'] = dict(UserPrintDto.fromUser(user))
     
     # redirect to schedule.
-    return RedirectResponse(url="/schedule/printMonth", status_code=303)
+    return RedirectResponse(url='/schedule/printMonth', status_code=303)
 
 @user_router.get('/logout')
 def logout(
@@ -76,7 +76,7 @@ def logout(
     # remove user from session.
     request.session.pop('user', None)
 
-    return RedirectResponse(url="/user/login")
+    return RedirectResponse(url='/user/login')
     
 @user_router.post('/create')
 def addUser(
@@ -91,23 +91,23 @@ def addUser(
     user_service.create(user)
     return user
 
-@user_router.get('/createAcount')
-def createAcont(
+@user_router.get('/createAccount')
+def createAccount(
     request: Request
 ):
     """
-    Get page Create Acount form.
+    Get page Create Account form.
     """
-    return template.TemplateResponse(name='create_acount.html', request=request)
+    return template.TemplateResponse(name='create_account.html', request=request)
 
-@user_router.post('/createAcount')
-def createAcont(
+@user_router.post('/createAccount')
+def createAccount(
     request: Request, 
     user_form: UserCreateDto = Form(), 
     user_service: UserService=Depends(UserService.getService)
 ):
     """
-    Create acount and redirect to schedule page.
+    Create account and redirect to schedule page.
     """
     user = user_form.toUser()
 
@@ -118,7 +118,7 @@ def createAcont(
     if user_with_same_email != None:
         errors.append({
             'title': 'Invalide Email',
-            'message': 'there is already an acount using this email !'
+            'message': 'there is already an account using this email !'
         })
     
     # error confirm password.
@@ -130,16 +130,76 @@ def createAcont(
 
     # if create raise an error.
     if len(errors) > 0 :
-        return template.TemplateResponse(name='create_acount.html', request=request, context={
+        return template.TemplateResponse(name='create_account.html', request=request, context={
             'errors': errors,
             'user_params': user_form  # to re-fill form.
         })
     
-    # create acount.
+    # create account.
     user_service.create(user)
     
     # save user in session.
     request.session['user'] = dict(UserPrintDto.fromUser(user))
     
     # redirect to schedule.
-    return RedirectResponse(url="/schedule/printMonth", status_code=303)
+    return RedirectResponse(url='/schedule/printMonth', status_code=303)
+
+
+@user_router.get('/updateAccount')
+def updateAccount(
+    request: Request,
+    user_id: int|None = None,
+    user_service: UserService=Depends(UserService.getService)
+):
+    """
+    Get page Update Account form.
+    """
+
+    # get user_id from user log by default. 
+    if user_id == None:
+        user_id = request.session.get('user').get('id')
+
+    user = user_service.readById(user_id)
+
+    user_params = UserUpdateDto.fromUser(user)
+
+    return template.TemplateResponse(name='update_account.html', request=request, context={
+        'user_params': user_params,
+        'user_params_email': user.email
+    })
+
+@user_router.post('/updateAccount')
+def updateAccount(
+    request: Request, 
+    user_form: UserUpdateDto = Form(), 
+    user_id: int|None = None,
+    user_service: UserService=Depends(UserService.getService)
+):
+    """
+    Update account and redirect to schedule page.
+    """
+
+    # take id user log by default.
+    if user_id == None:
+        user_id = request.session.get('user')['id']
+
+    user = user_service.readById(user_id)
+    
+    if user == None:
+        request.session['errors'] = [{
+            'title': 'User Not Found',
+            'message': 'The user you try to edit is not register !'
+        }]
+        RedirectResponse(url='/schedule/printMonth', status_code=303)
+
+    # edit user take from DB, with value from form.
+    user_form.fillUser(user)
+
+    # update user.
+    user_service.update(user)
+    
+    # save user in session.
+    request.session['user'] = dict(UserPrintDto.fromUser(user))
+    
+    # redirect to schedule.
+    return RedirectResponse(url='/schedule/printMonth', status_code=303)
