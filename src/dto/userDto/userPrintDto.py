@@ -1,6 +1,6 @@
 from dataclasses import dataclass, asdict
 from datetime import date
-from ..models import Gender, User
+from ...models import Gender, User
 import json
 
 @dataclass

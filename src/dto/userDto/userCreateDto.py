@@ -1,10 +1,11 @@
 from dataclasses import dataclass 
 from datetime import date
-from ..models import Gender, User
+from ...models import Gender, User
+from pydantic import BaseModel
 
 
 @dataclass
-class UserFormDto():
+class UserCreateDto(BaseModel):
 
     first_name: str
     last_name: str
@@ -17,6 +18,7 @@ class UserFormDto():
     #url_profil_picture: str
 
     raw_password: str
+    confirm_password: str
 
     def toUser(self) -> User:
         return User(

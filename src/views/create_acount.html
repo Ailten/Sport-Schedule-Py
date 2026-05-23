@@ -1,14 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Sport Schedules</title>
-    <link href="../bootstrap/bootstrap.min.css" rel="stylesheet">
-    <script src="../bootstrap/bootstrap.bundle.min.js" type="text/javascript"></script>
-    <link href="../css/main.css" rel="stylesheet">
-</head>
-<body>
+{% extends 'base_page.html' %}
 
+
+{% block links_base %}
+{% endblock links_base %}
+
+
+{% set current_page = 'create_acount' %}
+
+
+{% block main_base %}
 <div class="container d-flex justify-content-center align-items-center container-center-h-big">
     <div class="row w-100 justify-content-center">
         <div class="col-md-6 col-lg-8">
@@ -22,12 +22,18 @@
                         
                         <div class="mb-3">
                             <label for="first-name" class="form-label text-secondary fs-7">First Name</label>
-                            <input type="text" class="form-control form-control-lg" id="first-name" name="first-name" placeholder="first-name" required>
+                            <input type="text" 
+                                   class="form-control form-control-lg" 
+                                   id="first-name" 
+                                   name="first_name" 
+                                   placeholder="first-name" 
+                                   value="{% if user_params is defined %}{{user_params.first_name}}{% endif %}" 
+                                   required>
                         </div>
                         
                         <div class="mb-3">
                             <label for="last-name" class="form-label text-secondary fs-7">Last Name</label>
-                            <input type="text" class="form-control form-control-lg" id="last-name" name="last-name" placeholder="last-name" required>
+                            <input type="text" class="form-control form-control-lg" id="last-name" name="last_name" placeholder="last-name" required>
                         </div>
                         
                         <div class="mb-3">
@@ -37,51 +43,51 @@
                         
                         <div class="mb-4">
                             <label for="password" class="form-label text-secondary fs-7">Password</label>
-                            <input type="password" class="form-control form-control-lg" id="password" name="password" placeholder="••••••••" required>
+                            <input type="password" class="form-control form-control-lg" id="password" name="raw_password" placeholder="••••••••" required>
                         </div>
                         
                         <div class="mb-4">
                             <label for="confirm-password" class="form-label text-secondary fs-7">Confirm Password</label>
-                            <input type="password" class="form-control form-control-lg" id="confirm-password" name="confirm-password" placeholder="••••••••" required>
+                            <input type="password" class="form-control form-control-lg" id="confirm-password" name="confirm_password" placeholder="••••••••" required>
                         </div>
                         
                         <div class="mb-4">
                             <label for="phone-number" class="form-label text-secondary fs-7">Phone Number</label>
-                            <input type="text" class="form-control form-control-lg" id="phone-number" name="phone-number" placeholder="000-00-00-00" pattern="[0-9+_ -]*" required>
+                            <input type="text" class="form-control form-control-lg" id="phone-number" name="phone_number" placeholder="000-00-00-00" pattern="[0-9 +-]*" required>
                         </div>
 
                         <div class="mb-4">
                             <label for="height" class="form-label text-secondary fs-7">Height (meters)</label>
-                            <input type="number" class="form-control form-control-lg" id="height" name="height" placeholder="1.75" required>
+                            <input type="number" class="form-control form-control-lg" id="height" name="height" placeholder="1.75" step="0.01" required>
                         </div>
 
                         <div class="mb-4">
                             <label for="weight" class="form-label text-secondary fs-7">Weight (Kg)</label>
-                            <input type="number" class="form-control form-control-lg" id="weight" name="weight" placeholder="85" required>
+                            <input type="number" class="form-control form-control-lg" id="weight" name="weight" placeholder="85" step="0.1" required>
                         </div>
 
                         <div class="mb-4">
                             <label for="birth-date" class="form-label text-secondary fs-7">Birth Date</label>
-                            <input type="date" class="form-control form-control-lg" id="birth-date" name="birth-date" required>
+                            <input type="date" class="form-control form-control-lg" id="birth-date" name="birth_date" required>
                         </div>
 
                         <div class="mb-4">
                             <label for="birth-date" class="form-label text-secondary fs-7">Gender</label>
                             <div class="mb-4 form-check disabled">
-                                <input class="form-check-input" type="radio" name="exampleRadios" id="gender" value="Male">
-                                <label class="form-check-label" for="gender">
+                                <input class="form-check-input" type="radio" name="gender" id="gender-male" value="1">
+                                <label class="form-check-label" for="gender-male">
                                     Male
                                 </label>
                             </div>
                             <div class="mb-4 form-check disabled">
-                                <input class="form-check-input" type="radio" name="exampleRadios" id="gender" value="Female">
-                                <label class="form-check-label" for="gender">
+                                <input class="form-check-input" type="radio" name="gender" id="gender-female" value="2">
+                                <label class="form-check-label" for="gender-female">
                                     Female
                                 </label>
                             </div>
                             <div class="mb-4 form-check disabled">
-                                <input class="form-check-input" type="radio" name="exampleRadios" id="gender" value="Other">
-                                <label class="form-check-label" for="gender">
+                                <input class="form-check-input" type="radio" name="gender" id="gender-other" value="3">
+                                <label class="form-check-label" for="gender-other">
                                     Other
                                 </label>
                             </div>
@@ -102,6 +108,4 @@
             </div>
     </div>
 </div>
-
-</body>
-</html>
+{% endblock main_base %}

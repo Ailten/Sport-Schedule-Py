@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Request, Depends, Form
 from ..dto import UserLoginFormDto
 from ..models import User
-from ..dto import UserPrintDto, UserFormDto
+from ..dto import UserPrintDto, UserCreateDto
 from ..services import UserService
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse
@@ -79,11 +79,10 @@ def logout(
 
     return RedirectResponse(url="/user/login")
     
-
 @user_router.post('/create')
 def addUser(
     request: Request, 
-    user_form: UserFormDto, 
+    user_form: UserCreateDto, 
     user_service: UserService=Depends(UserService.getService),
 ) -> User:
     """
@@ -92,3 +91,56 @@ def addUser(
     user = user_form.toUser()
     user_service.create(user)
     return user
+
+@user_router.get('/createAcount')
+def createAcont(
+    request: Request
+):
+    """
+    Get page Create Acount form.
+    """
+    return template.TemplateResponse(name='create_acount.html', request=request)
+
+@user_router.post('/createAcount')
+def createAcont(
+    request: Request, 
+    user_form: UserCreateDto = Form(), 
+    user_service: UserService=Depends(UserService.getService)
+):
+    """
+    Create acount and redirect to schedule page.
+    """
+    user = user_form.toUser()
+
+    errors = []
+
+    # error email unique.
+    user_with_same_email = user_service.getUserByLogin(user.email)
+    if user_with_same_email != None:
+        errors.append({
+            'title': 'Invalide Email',
+            'message': 'there is already an acount using this email !'
+        })
+    
+    # error confirm password.
+    if user_form.raw_password != user_form.confirm_password:
+        errors.append({
+            'title': 'Invalide Password',
+            'message': 'your confirm password is not the same !'
+        })
+
+    # if create raise an error.
+    if len(errors) > 0 :
+        return template.TemplateResponse(name='create_acount.html', request=request, context={
+            'errors': errors,
+            'user_params': user_form  # to re-fill form.
+        })
+    
+    # create acount.
+    user_service.create(user)
+    
+    # save user in session.
+    request.session['user'] = dict(UserPrintDto.fromUser(user))
+    
+    # redirect to schedule.
+    return RedirectResponse(url="/schedule/printMonth", status_code=303)
