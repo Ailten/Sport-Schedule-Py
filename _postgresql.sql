@@ -65,4 +65,9 @@ insert into schedules(id, user_id, start_date, end_date) values
 (1, 1, '2026-06-01'::date, Null);
 
 truncate table exercice_to_dos restart identity cascade;
-insert into exercice_to_dos(id, schedule_id, exercice_id, days_of_week, )
+insert into exercice_to_dos(id, schedule_id, exercice_id, days_of_week, repetition, series, additional_weight) values
+(1, 1, 1, 1, 30, 2, 0.0), -- pompe lundi.
+(2, 1, 4, 2, 20, 2, 0.0), -- abdo mardi.
+(3, 1, 2, 8, 12, 3, 9.0), -- squat jeudi.
+(4, 1, 3, 32, 12, 3, 10.0); -- traction samedi.
+

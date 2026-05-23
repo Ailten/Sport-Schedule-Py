@@ -54,8 +54,15 @@ def handleLogin(
     """
     user = user_service.getUserByLoginPassword(user_login_form.login, user_login_form.password)
     if not user:
-        # TODO: send an error to the login view (to print in pop-up).
-        return template.TemplateResponse(name='login.html', request=request)
+        return template.TemplateResponse(name='login.html', request=request, context={
+            'errors': [{
+                'title': 'Access denied',
+                'message': 'login or password incorrect !'
+            },{
+                'title': 'Access denied',
+                'message': 'login or password incorrect !'
+            }]
+        })
 
     # save user in session.
     request.session['user'] = dict(UserPrintDto.fromUser(user))
