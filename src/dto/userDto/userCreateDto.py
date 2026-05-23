@@ -14,7 +14,7 @@ class UserCreateDto(BaseModel):
     height: float
     weight: float
     birth_date: date
-    gender: Gender
+    gender: int
     #url_profil_picture: str
 
     raw_password: str
@@ -29,7 +29,7 @@ class UserCreateDto(BaseModel):
             height=self.height,
             weight=self.weight,
             birth_date=self.birth_date,
-            gender=self.gender,
+            gender=Gender(self.gender),
             #url_profil_picture=self.url_profil_picture,
             url_profil_picture=None,
             

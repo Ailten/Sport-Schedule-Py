@@ -13,6 +13,7 @@ class UserService(ServiceWithPK):
     # override create, to hash password before.
     def create(self, user_to_add: User) -> User:
         user_to_add.password = Crypt.hashStr(user_to_add.password)
+        user_to_add.email = user_to_add.email.lower()
         return super().create(user_to_add)
 
     def getUserByLogin(self, email: str) -> User|None:

@@ -5,7 +5,6 @@ from ..dto import UserPrintDto, UserCreateDto
 from ..services import UserService
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse
-from datetime import datetime
 
 user_router = APIRouter(prefix='/user', tags=['User'])
 template = Jinja2Templates(directory='src/views')
@@ -67,7 +66,7 @@ def handleLogin(
     # redirect to schedule.
     return RedirectResponse(url="/schedule/printMonth", status_code=303)
 
-@user_router.post('/logout')
+@user_router.get('/logout')
 def logout(
     request: Request
 ):

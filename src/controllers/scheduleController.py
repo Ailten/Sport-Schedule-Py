@@ -4,11 +4,21 @@ from fastapi.templating import Jinja2Templates
 from datetime import datetime
 from ..services.scheduleService import ScheduleService
 import re
+from fastapi.responses import RedirectResponse
 
 
 schedule_router = APIRouter(prefix='/schedule', tags=['Schedule'])
 template = Jinja2Templates(directory='src/views')
 
+
+@schedule_router.get('/')
+def schedule(
+    request: Request
+):
+    """
+    Default route, redirect to schedule/printMonth
+    """
+    return RedirectResponse(url="/schedule/printMonth")
 
 @schedule_router.get('/printMonth')
 def printMonth(
@@ -56,4 +66,28 @@ def printMonth(
         'is_current_month': is_current_month,
 
         'schedules': schedules_use_in_month
+    })
+
+@schedule_router.get('/create')
+def createSchedule(
+    request: Request,
+    schedule_service: ScheduleService=Depends(ScheduleService.getService)
+):
+    """
+    Get page create a new Schedule.
+    """
+    # redirect to schedule.
+    return template.TemplateResponse(name='create_schedule.html', request=request)
+
+@schedule_router.get('/statistics')
+def statistics(
+    request: Request,
+    schedule_service: ScheduleService=Depends(ScheduleService.getService)
+):
+    """
+    Get page create a new Schedule.
+    """
+    # redirect to schedule.
+    return template.TemplateResponse(name='statistics.html', request=request, context={
+
     })
