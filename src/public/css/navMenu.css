@@ -1,0 +1,16 @@
+
+
+
+.navigation-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 100;
+    width: 17vw;
+}
+
+
+.profile-img {
+    width: 15vh;
+    height: 15vh;
+}

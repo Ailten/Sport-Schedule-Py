@@ -58,9 +58,6 @@ def handleLogin(
             'errors': [{
                 'title': 'Access denied',
                 'message': 'login or password incorrect !'
-            },{
-                'title': 'Access denied',
-                'message': 'login or password incorrect !'
             }]
         })
 

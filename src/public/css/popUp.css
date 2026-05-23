@@ -1,0 +1,13 @@
+
+.pop-up-error {
+    background-color: rgba(255, 85, 85, 0.596);
+    outline: #ff00008f 2px solid;
+}
+.fade-out-delete {
+    animation-name: fade-out-delete;
+    animation-duration: 0.5s;
+}
+@keyframes fade-out-delete {
+    0% {opacity: 1;}
+    100% {opacity: 0;}
+}
