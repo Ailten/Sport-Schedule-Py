@@ -1,6 +1,6 @@
 from .service import ServiceWithPK
-from sqlalchemy.orm import Session
-from ..models.schedule import Schedule
+from sqlalchemy.orm import Session, contains_eager
+from ..models import Schedule, CheckExercice, ExerciceToDo
 from datetime import date
 import calendar
 
@@ -16,10 +16,39 @@ class ScheduleService(ServiceWithPK):
         date_min_ask = date(year, month, 1)
         date_max_ask = date(year, month, calendar.monthrange(year, month)[1])
 
-        return self._session_db.query(self._model_type).filter(
+        # get max date for end check exercice (+24h).
+        date_max_ask_check = date(year, month + 1, 1)
+
+        return self._session_db.query(
+            Schedule
+        ).join(
+            ExerciceToDo
+        ).join(  # fake outer join.
+            CheckExercice,
+            CheckExercice.exercice_to_do_id == ExerciceToDo.id and (  # 
+                CheckExercice.date_check < date_max_ask_check,
+                CheckExercice.date_check >= date_min_ask
+            ),
+            isouter=True
+        ).filter(
             self._model_type.user_id == user_id and
             (
                 self._model_type.start_date <= date_max_ask and
                 self._model_type.end_date >= date_min_ask
             )
         ).all()
+
+
+# TODO: make proper outer join.
+#.outerjoin(
+#    CheckExercice
+#).filter(
+#    or_(
+#        CheckExercice.id == None,
+#        and_(
+#            CheckExercice.date_check < date_max_ask_check,
+#            CheckExercice.date_check >= date_min_ask
+#        )
+#).options(
+#    contains_eager(Schedule.exercice_to_dos).contains_eager(ExerciceToDo.checkExecercices)
+#)

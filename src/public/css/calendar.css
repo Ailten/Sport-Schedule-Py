@@ -52,12 +52,38 @@ div.header-calendar-days {
 .week-end {
     background-color: #edfaff;
 }
+div.day-card:has( > div.exercice-block.checked-exercice) {
+    /*background-color: rgb(210, 255, 210, 1);*/
+    /*background: linear-gradient(
+        125deg,
+        rgba(100, 255, 80, 0.6) 0%, 
+        rgba(100, 255, 80, 0.15) 50%, 
+        rgba(100, 255, 80, 0.6) 100%
+    );*/
+    background: linear-gradient(
+        125deg, 
+        rgb(255, 255, 90, 0.6) 0%, 
+        rgb(255, 255, 90, 0.15) 50%, 
+        rgb(255, 255, 90, 0.6) 100%
+    );
+}
+div.day-card:has( > div.exercice-block.checked-exercice) > div.exercice-block {
+    /*background-color: rgb(245 245 114);*/
+    background: linear-gradient(
+        125deg, 
+        rgb(245, 245, 114, 1) 0%, 
+        rgb(251, 251, 196, 1) 50%, 
+        rgb(245, 245, 114, 1) 100%
+    );
+    outline-color: rgb(225 225 93);
+}
 
 
 .exercice-block {
-    background-color: rgb(255 219 152);
-    border-radius: 5px;
-    outline: #edc375 2px solid;
+    background-color: rgba(255, 219, 152, 0.6);
+    border-radius: 3px;
+    outline: hsla(39, 77%, 69%, 0.6) 2px solid;
     text-align: center;
     font-style: italic;
+    margin-top: 5px
 }

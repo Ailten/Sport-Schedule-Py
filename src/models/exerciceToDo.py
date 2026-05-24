@@ -6,6 +6,7 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from .schedule import Schedule
     from .exercice import Exercice
+    from .checkExercice import CheckExercice
 
 class ExerciceToDo(Base):
     __tablename__ = 'exercice_to_dos'
@@ -21,6 +22,7 @@ class ExerciceToDo(Base):
     exercice: Mapped[Exercice] = relationship(
         init=False
     )
+    check_exercices: list['CheckExercice'] = relationship(back_populates='exercice_to_do')
 
     # ---> parameters.
     days_of_week: Mapped[int] = mapped_column()

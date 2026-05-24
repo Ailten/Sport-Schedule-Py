@@ -13,6 +13,8 @@ class ExerciceToDoCalendarDto():
     series: int
     additional_weight: float
 
+    days_of_week_checked: list[int]
+
     @staticmethod
     def fromExerciceToDo(exercice_to_do: 'ExerciceToDo') -> 'ExerciceToDoCalendarDto':
         return ExerciceToDoCalendarDto(
@@ -21,5 +23,7 @@ class ExerciceToDoCalendarDto():
             days_of_week=exercice_to_do.days_of_week,
             repetition=exercice_to_do.repetition,
             series=exercice_to_do.series,
-            additional_weight=exercice_to_do.additional_weight
+            additional_weight=exercice_to_do.additional_weight,
+
+            days_of_week_checked=[ c.date_check.day for c in exercice_to_do.check_exercices ]
         )

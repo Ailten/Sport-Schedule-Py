@@ -73,6 +73,11 @@ insert into exercice_to_dos(id, schedule_id, exercice_id, days_of_week, repetiti
 (4, 1, 3, 32, 12, 3, 10.0); -- traction samedi.
 select * from exercice_to_dos;
 
+truncate table check_exercices restart identity cascade;
+insert into check_exercices(id, exercice_to_do_id, date_check) values
+(1, 1, '2026-05-18'::date);
+select * from check_exercices;
+
 -- update user.
 update users set
 id=1,
