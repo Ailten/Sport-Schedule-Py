@@ -2,6 +2,7 @@
 from .database import makeSession
 
 from .gender import Gender
+from .daysOfWeek import DaysOfWeek
 
 from .user import User
 from .schedule import Schedule
