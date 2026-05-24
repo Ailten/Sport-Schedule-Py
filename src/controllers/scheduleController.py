@@ -2,6 +2,8 @@ import calendar
 from fastapi import APIRouter, Request, Depends
 from fastapi.templating import Jinja2Templates
 from datetime import datetime
+
+from src.dto.scheduleDto.scheduleCalendarDto import ScheduleCalendarDto
 from ..services.scheduleService import ScheduleService
 import re
 from fastapi.responses import RedirectResponse
@@ -55,6 +57,8 @@ def printMonth(
 
     # get all schedule for the month ask.
     schedules_use_in_month = schedule_service.getMonthOfAnUser(user_id, year, month)
+    # cast in dto (to print easyli in view).
+    schedules_calendar_dto = ScheduleCalendarDto.fromListSchedule(schedules_use_in_month, year, month)
 
     context = {
         'month_ask': month_ask,  # string value, to assigne in input.
@@ -64,7 +68,7 @@ def printMonth(
         'today_day': today.day,  # numbers values, to comparate.
         'is_current_month': is_current_month,
 
-        'schedules': schedules_use_in_month
+        'schedules_calendar': schedules_calendar_dto
     }
     errors = request.session.get('errors', None)  # include errors from redirction (if has one).
     if errors != None:

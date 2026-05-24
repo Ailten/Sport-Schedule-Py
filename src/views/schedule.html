@@ -40,13 +40,38 @@
                 {% if i < days_skip_first_week %}
                     <div class="day-none border rounded m-1"></div>
                 {% else %}
+                
+                    {% set day_of_week = (i % 7) + 1 %}
+                    {% set day_of_month = i - days_skip_first_week + 1 %}
+
                     <div class="card day-card border rounded m-1 p-2 d-flex flex-column justify-content-between
-                                {% if (i - days_skip_first_week + 1) == today_day and is_current_month %}today{% endif %}
-                                {% if i % 7 > 4 %}week-end{% endif %}">
+                                {% if day_of_month == today_day and is_current_month %}today{% endif %}
+                                {% if day_of_week > 5 %}week-end{% endif %}">
+            
                         <div class="text-startday-number">
-                            {{ i - days_skip_first_week + 1}}
+                            {{ day_of_month }}
                         </div>
-                        <div class="text-end text-muted small line-under-day">
+
+                        {% if day_of_month in schedules_calendar.schedules_keys %}
+                            {% set schedule_key = schedules_calendar.schedules_keys[day_of_month] %}
+                            {% set current_schedule = schedules_calendar.schedules[schedule_key] %}
+                            {% if (day_of_week-1) in current_schedule.exercice_to_dos_keys %}
+                                {% set exercice_to_do_keys = current_schedule.exercice_to_dos_keys[day_of_week-1] %}
+                                {% set exercice_to_do_key = exercice_to_do_keys[0] %}
+                                {% set exercice_to_do = current_schedule.exercice_to_dos[exercice_to_do_key] %}
+                                {% set exercice_name = exercice_to_do.exercice_name %}
+                                <div class="exercice-block">
+                                {{exercice_to_do.exercice_name}}
+                                </div>
+                                {% if exercice_to_do_keys|length > 1 %}
+                                    <div class="exercice-block">
+                                    ...
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+
+                        <div class="text-end text-muted small line-under-day mt-auto">
                             <div>
                                 <i class="bi bi-check-lg"></i>
                             </div>

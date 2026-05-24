@@ -52,3 +52,12 @@ div.header-calendar-days {
 .week-end {
     background-color: #edfaff;
 }
+
+
+.exercice-block {
+    background-color: rgb(255 219 152);
+    border-radius: 5px;
+    outline: #edc375 2px solid;
+    text-align: center;
+    font-style: italic;
+}

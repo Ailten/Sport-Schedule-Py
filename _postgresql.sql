@@ -103,3 +103,11 @@ gender='Female',
 url_profil_picture='admin@gmail.com'
 where id = 2;
 select * from users;
+
+
+--select extract(day from jour)::integer as jour_du_mois
+--from generate_series(
+--    '2026-05-01'::date,
+--    ('2026-05-01'::date + interval '1 month' - interval '1 day')::date,
+--    interval '1 day'
+--) as jour;
