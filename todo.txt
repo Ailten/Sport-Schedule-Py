@@ -1,0 +1,10 @@
+
+// load data on page statistics.
+// (~) --> add input to edit week selected on page statistics.
+
+// page/form new schedule.
+// (~) --> allow user to create their own custome exercice (need to edit DB).
+
+// (~) page parameters 
+
+// (~) page list users, for role admin.
