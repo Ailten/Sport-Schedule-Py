@@ -11,7 +11,7 @@ template = Jinja2Templates(directory='src/views')
 
 
 @user_router.get('/readAll')
-async def getAllUser(
+def getAllUser(
     request: Request, 
     user_service: UserService=Depends(UserService.getService),
 ) -> list[UserPrintDto]:
