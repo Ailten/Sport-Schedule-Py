@@ -23,6 +23,12 @@ class Physics:
         )
     
     @classmethod
+    def __gravityTerrestre(cls, exercice_to_do: 'ExerciceToDo') -> float:
+        return (
+            Physics.__constante_gravity_terrestre / (exercice_to_do.series**2)
+        )
+    
+    @classmethod
     def __muscleEfficyEval(cls, user: 'User') -> float:
         return (
             Physics.__muscle_efficy - 
@@ -32,16 +38,10 @@ class Physics:
     
     @classmethod
     def evalJoulesUseForExercice(cls, user: 'User', exercice: 'Exercice', exercice_to_do: 'ExerciceToDo') -> float:
-        print(f'--- {exercice.name} ---')
-        print(f'weight : {Physics.__weightUse(user, exercice, exercice_to_do)}')
-        print(f'quantity : {Physics.__quantityMovement(exercice, exercice_to_do)}')
-        print(f'const : {(Physics.__constante_gravity_terrestre / (exercice_to_do.series**2))}')
-        print(f'efficy : {Physics.__muscleEfficyEval(user)}')
-        print(f'-----------------------')
         return (
             Physics.__weightUse(user, exercice, exercice_to_do) *
             Physics.__quantityMovement(exercice, exercice_to_do) *
-            (Physics.__constante_gravity_terrestre / (exercice_to_do.series**2)) *
+            Physics.__gravityTerrestre(exercice_to_do) *
             Physics.__muscleEfficyEval(user) 
         )
     

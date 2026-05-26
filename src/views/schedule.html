@@ -60,7 +60,7 @@
                                 {% set exercice_to_do_key = exercice_to_do_keys[0] %}
                                 {% set exercice_to_do = current_schedule.exercice_to_dos[exercice_to_do_key] %}
                                 {% set exercice_name = exercice_to_do.exercice_name %}
-                                {% set is_all_day_check = exercice_to_do.days_of_week_checked | select('equalto', day_of_month) | list | length >= 1 %}
+                                {% set is_all_day_check = day_of_month in current_schedule.days_full_checked %}
                                 <div class="exercice-block
                                             {% if is_all_day_check %}checked-exercice{% endif %}">
                                 {{exercice_to_do.exercice_name}}

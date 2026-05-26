@@ -15,7 +15,7 @@ class ScheduleCalendarDto():
     @staticmethod
     def fromListSchedule(schedules : list['Schedule'], year, month) -> 'ScheduleCalendarDto':
         output = ScheduleCalendarDto(
-            schedules=[ ScheduleWeekDto.fromSchedule(s) for s in schedules ],
+            schedules=[ ScheduleWeekDto.fromSchedule(s, year, month) for s in schedules ],
             schedules_keys=dict()
         )
         output.__evalSchedulesKey(year, month, schedules)
