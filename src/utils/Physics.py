@@ -15,11 +15,11 @@ class Physics:
         return (user.weight * exo.amplitude) + etc.additional_weight
 
     @classmethod
-    def __quantityMovement(cls, exo: 'Exercice', etc: 'ExerciceToDo') -> float:
+    def __quantityMovement(cls, exercice: 'Exercice', exercice_to_do: 'ExerciceToDo') -> float:
         return (
-            (etc.repetition * etc.series) 
-            if exo.is_minutes else
-            ((etc.repetition / 60) * 25 * etc.series)
+            (exercice_to_do.repetition * exercice_to_do.series) 
+            if not exercice.is_minutes else
+            ((exercice_to_do.repetition / 60) * 25 * exercice_to_do.series)
         )
     
     @classmethod
@@ -32,13 +32,19 @@ class Physics:
     
     @classmethod
     def evalJoulesUseForExercice(cls, user: 'User', exercice: 'Exercice', exercice_to_do: 'ExerciceToDo') -> float:
+        print(f'--- {exercice.name} ---')
+        print(f'weight : {Physics.__weightUse(user, exercice, exercice_to_do)}')
+        print(f'quantity : {Physics.__quantityMovement(exercice, exercice_to_do)}')
+        print(f'const : {(Physics.__constante_gravity_terrestre / (exercice_to_do.series**2))}')
+        print(f'efficy : {Physics.__muscleEfficyEval(user)}')
+        print(f'-----------------------')
         return (
             Physics.__weightUse(user, exercice, exercice_to_do) *
             Physics.__quantityMovement(exercice, exercice_to_do) *
-            Physics.__constante_gravity_terrestre *
+            (Physics.__constante_gravity_terrestre / (exercice_to_do.series**2)) *
             Physics.__muscleEfficyEval(user) 
         )
     
     @classmethod
     def joulesToKcalories(cls, joules: float) -> float:
-        return joules / 4184
+        return joules / 1000 # convertion brut for methabolisme (value mecanic : 4184).
