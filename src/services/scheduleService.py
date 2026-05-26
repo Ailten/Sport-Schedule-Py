@@ -52,3 +52,10 @@ class ScheduleService(ServiceWithPK):
 #).options(
 #    contains_eager(Schedule.exercice_to_dos).contains_eager(ExerciceToDo.checkExecercices)
 #)
+    
+
+    def getCurrentScheduleOfAnUser(self, user_id: int):
+        return self._session_db.query(self._model_type).filter(
+            self._model_type.user_id == user_id and
+            self._model_type.end_date == None
+        ).first()

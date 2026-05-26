@@ -1,11 +1,10 @@
-
+from ..models.gender import Gender
 
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from ..models.user import User
     from ..models.exercice import Exercice
     from ..models.exerciceToDo import ExerciceToDo
-    from ..models.gender import Gender
 
 class Physics:
     __constante_gravity_terrestre = 9.81
@@ -32,10 +31,10 @@ class Physics:
         )
     
     @classmethod
-    def evalJoulesUseForExercice(cls, user: 'User', exo: 'Exercice', etc: 'ExerciceToDo') -> float:
+    def evalJoulesUseForExercice(cls, user: 'User', exercice: 'Exercice', exercice_to_do: 'ExerciceToDo') -> float:
         return (
-            Physics.__weightUse(user, exo) *
-            Physics.__quantityMovement(exo, etc) *
+            Physics.__weightUse(user, exercice, exercice_to_do) *
+            Physics.__quantityMovement(exercice, exercice_to_do) *
             Physics.__constante_gravity_terrestre *
             Physics.__muscleEfficyEval(user) 
         )

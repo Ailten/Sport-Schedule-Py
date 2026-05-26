@@ -4,6 +4,7 @@ from fastapi.templating import Jinja2Templates
 from datetime import datetime
 
 from src.dto.scheduleDto.scheduleCalendarDto import ScheduleCalendarDto
+from src.dto.scheduleDto.scheduleKcalDto import ScheduleKcalDto
 from ..services.scheduleService import ScheduleService
 import re
 from fastapi.responses import RedirectResponse
@@ -90,12 +91,24 @@ def createSchedule(
 @schedule_router.get('/statistics')
 def statistics(
     request: Request,
+    user_id: int|None = None,
     schedule_service: ScheduleService=Depends(ScheduleService.getService)
 ):
     """
-    Get page create a new Schedule.
+    Get page statistics for the current schedule.
     """
+
+    # default take id of user log.
+    if user_id == None:
+        user_id = request.session.get('user')['id']
+
+    # get the last schedule of user (the one whith no date end)
+    current_schedule = schedule_service.getCurrentScheduleOfAnUser(user_id)
+
+    # cast as DTO object, to take only parameter whant (and print easyli).
+    schedule_dto = ScheduleKcalDto.fromSchedule(current_schedule)
+
     # redirect to schedule.
     return template.TemplateResponse(name='statistics.html', request=request, context={
-
+        'schedule': schedule_dto
     })

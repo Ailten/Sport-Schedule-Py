@@ -22,6 +22,9 @@
             <div class="card-body">
                 <canvas id="calorie-chart"></canvas>
             </div>
+            {% for kcal in schedule %}
+            <input type="hidden" class="kcal-day-value" value="{{ kcal }}"/>
+            {% endfor %}
         </div>
     
     </div>

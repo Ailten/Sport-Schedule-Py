@@ -1,8 +1,15 @@
 
 window.addEventListener('load', _ => {
 
+    // get data from hidden input.
+    kcalDays = Array.prototype.map.call(
+        document.getElementsByClassName('kcal-day-value'),
+        inputHidden => inputHidden.value
+    );
+
+    // send data to graph chart.
     generateGraph(
-        [2100, 1850, 2400, 1900, 2250, 2600, 2000]
+        kcalDays
     );
 
 });
