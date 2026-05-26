@@ -5,6 +5,9 @@
 // page/form new schedule.
 // (~) --> allow user to create their own custome exercice (need to edit DB).
 
+// page/form details exercice du jour.
+// --> end point, cocher tout la journée.
+
 // (~) page parameters 
 
 // (~) page list users, for role admin.
