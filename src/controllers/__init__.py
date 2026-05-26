@@ -1,2 +1,3 @@
 from .userControllers import user_router
 from .scheduleController import schedule_router
+from .checkExerciceController import check_exercice_router

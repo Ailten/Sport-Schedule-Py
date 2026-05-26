@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session, contains_eager
 from ..models import Schedule, CheckExercice, ExerciceToDo
 from datetime import date
 import calendar
+from sqlalchemy.sql import and_, or_
 
 class ScheduleService(ServiceWithPK):
 
@@ -31,10 +32,14 @@ class ScheduleService(ServiceWithPK):
             ),
             isouter=True
         ).filter(
-            self._model_type.user_id == user_id and
-            (
-                self._model_type.start_date <= date_max_ask and
-                self._model_type.end_date >= date_min_ask
+            and_(
+                self._model_type.user_id == user_id,
+
+                self._model_type.start_date <= date_max_ask,
+                or_(
+                    Schedule.end_date == None,
+                    Schedule.end_date >= date_min_ask
+                )
             )
         ).all()
 

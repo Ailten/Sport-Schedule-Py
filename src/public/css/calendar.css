@@ -87,3 +87,8 @@ div.day-card:has( > div.exercice-block.checked-exercice) > div.exercice-block {
     font-style: italic;
     margin-top: 5px
 }
+
+
+form.form-inline:has( i) {
+    display: inline;
+}

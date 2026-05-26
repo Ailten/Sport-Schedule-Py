@@ -1,6 +1,8 @@
 from .database import Base
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import ForeignKey, CheckConstraint
+from sqlalchemy.ext.hybrid import hybrid_method
+from .daysOfWeek import DaysOfWeek
 
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
@@ -36,3 +38,7 @@ class ExerciceToDo(Base):
     #    'repetition_min': CheckConstraint('repetition > 0 '),
     #    'series_min': CheckConstraint('series > 0 ')
     #}
+
+    @hybrid_method
+    def has_day_of_week(self, day_of_week: 'DaysOfWeek'):
+        return (self.days_of_week & day_of_week) == day_of_week

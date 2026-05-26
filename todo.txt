@@ -11,3 +11,10 @@
 // (~) page parameters 
 
 // (~) page list users, for role admin.
+
+// verification user log is role admin, for param user_id default.
+
+// ----------------------->
+
+// verify month futur, if take the schedule current.
+// verify check all day.

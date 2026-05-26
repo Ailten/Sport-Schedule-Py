@@ -70,17 +70,23 @@
                                     ...
                                     </div>
                                 {% endif %}
+
+                                <div class="text-end text-muted small line-under-day mt-auto">
+                                    {% if not is_all_day_check %}
+                                    <form action="/checkExercice/checkWholeDay" method="POST" class="form-inline">
+                                        <div>
+                                            <i class="bi bi-check-lg check-whole-day" day-of-month="{{day_of_month}}"></i>
+                                        </div>
+                                        <input type="hidden" name="date_exo" value="{{month_ask}}-{% if day_of_month < 10 %}0{% endif %}{{day_of_month}}"/>
+                                    </form>
+                                    {% endif %}
+                                    <div>
+                                        <i class="bi bi-three-dots"></i>
+                                    </div>
+                                </div>
+
                             {% endif %}
                         {% endif %}
-
-                        <div class="text-end text-muted small line-under-day mt-auto">
-                            <div>
-                                <i class="bi bi-check-lg"></i>
-                            </div>
-                            <div>
-                                <i class="bi bi-three-dots"></i>
-                            </div>
-                        </div>
                     </div>
                 {% endif %}
             {% endfor %}

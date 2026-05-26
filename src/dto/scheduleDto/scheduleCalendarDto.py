@@ -29,11 +29,11 @@ class ScheduleCalendarDto():
 
         # generate key mapping for days of month.
         self.schedules_keys=dict()
-        for i in range(days_in_month):
+        for day_of_month in range(1, days_in_month + 1):
             key_schedule = next([ k for k,v in enumerate(schedules) if (
-                v.start_date.day <= i and
-                (v.end_date == None or v.end_date.day >= i)
+                v.start_date.day <= day_of_month and
+                (v.end_date == None or v.end_date.day >= day_of_month)
             )].__iter__(), None)
             if key_schedule == None:  # skip if no schedule for this day.
                 continue
-            self.schedules_keys[i] = key_schedule
+            self.schedules_keys[day_of_month] = key_schedule

@@ -73,7 +73,7 @@ select * from exercices;
 
 truncate table schedules restart identity cascade;
 insert into schedules(id, user_id, start_date, end_date) values
-(1, 1, '2026-06-01'::date, Null);
+(1, 1, '2026-05-01'::date, Null);
 select * from schedules;
 
 truncate table exercice_to_dos restart identity cascade;
@@ -143,3 +143,16 @@ select * from users;
 --    ('2026-05-01'::date + interval '1 month' - interval '1 day')::date,
 --    interval '1 day'
 --) as jour;
+
+insert into check_exercices(exercice_to_do_id, date_check) values
+(1, '2026-05-04'::date);
+select * from check_exercices;
+
+--SELECT *
+--FROM exercice_to_dos
+--    JOIN schedules ON schedules.id = exercice_to_dos.schedule_id
+--    LEFT JOIN check_exercices ON check_exercices.exercice_to_do_id = exercice_to_dos.id AND check_exercices.date_check = '2026-05-04'::date
+--WHERE schedules.start_date <= '2026-05-04'::date
+--  AND check_exercices is NULL
+--  AND (schedules.end_date IS NULL OR schedules.end_date >= '2026-05-04'::date)
+--  AND (exercice_to_dos.days_of_week & 1 > 0);
