@@ -18,3 +18,7 @@
 
 // verify month futur, if take the schedule current.
 // verify check all day.
+
+// test unitaire.
+
+// TODO : debug button i "details exercice of a day" (param date_exo not take).

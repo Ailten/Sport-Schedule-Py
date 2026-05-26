@@ -79,10 +79,13 @@
                                         </div>
                                         <input type="hidden" name="date_exo" value="{{month_ask}}-{% if day_of_month < 10 %}0{% endif %}{{day_of_month}}"/>
                                     </form>
+                                    <form action="/exerciceToDo/detailsWholeDay" method="GET" class="form-inline">
+                                        <div>
+                                            <i class="bi bi-three-dots details-whole-day"></i>
+                                        </div>
+                                        <input type="hidden" name="date_exo" value="{{month_ask}}-{% if day_of_month < 10 %}0{% endif %}{{day_of_month}}"/>
+                                    </form>
                                     {% endif %}
-                                    <div>
-                                        <i class="bi bi-three-dots"></i>
-                                    </div>
                                 </div>
 
                             {% endif %}

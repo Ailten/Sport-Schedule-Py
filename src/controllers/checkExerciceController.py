@@ -34,7 +34,8 @@ def schedule(
     if date_check.date != date_exo:
         date_check = datetime(date_exo.year, date_exo.month, date_exo.day)
 
-    exercices_to_dos = exercice_to_do_service.getAllForADay(date_exo)
+    # get all exercice to do (for a day specific AND whish is not checked already).
+    exercices_to_dos = exercice_to_do_service.getAllForADayNotChecked(date_exo)
 
     check_exercice_service.checkMany(exercices_to_dos, date_check)
 
