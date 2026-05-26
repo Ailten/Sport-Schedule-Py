@@ -9,7 +9,7 @@ exercice_to_do_router = APIRouter(prefix='/exerciceToDo', tags=['exerciceToDo'])
 template = Jinja2Templates(directory='src/views')
 
 
-@exercice_to_do_router.get('/detailsWholeDay')
+@exercice_to_do_router.post('/detailsWholeDay')
 def schedule(
     request: Request,
     date_exo: date = Form(),
@@ -26,7 +26,7 @@ def schedule(
 
     exercice_to_do = exercice_to_do_service.getAllForADay(date_exo)
     for etd in exercice_to_do:
-        print([ ce.day for ce in etd.check_exercices ])
+        print([ ce.date_check.day for ce in etd.check_exercices ])
         
     return template.TemplateResponse(name='details_exo_to_do.html', request=request, context={
         'exercice_to_do': exercice_to_do
