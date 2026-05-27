@@ -3,7 +3,6 @@
 
 {% block links_base %}
 <script src="http://127.0.0.1:8000/public/js/createSchedule.js" type="text/javascript"></script>
-<link href="http://127.0.0.1:8000/public/css/createSchedule.css" rel="stylesheet">
 {% endblock links_base %}
 
 
@@ -48,7 +47,7 @@
  
                         <datalist id="exercice-enum-ref">
                             {% for exercice in exercices %}
-                                <option value="{{exercice.id}}">{{exercice.name}}</option>
+                                <option value="{{exercice.name}}" data-id-value="{{exercice.id}}">{{exercice.name}}</option>
                             {% endfor %}
                         </datalist>
                         

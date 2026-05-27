@@ -101,12 +101,13 @@ async def createScheduleGetData(
     request: Request,
     exercice_to_do_service: ExerciceToDoService=Depends(ExerciceToDoService.getService)
 ):
-    form_data = request.form()  # DEBUG.
-    print(form_data)
+    form_data = await request.form()
     dict_data = dict(form_data)
-    print(dict_data)
+
+    # TODO : insert dict (manage data).
+    # {'type-exo-Monday-0': 'Pompes', 'hidden-type-exo-Monday-0': '1', 'reps-Monday-0': '2', 'series-Monday-0': '2', 'weight-Monday-0': '0.0', 'type-exo-Monday-1': 'Squat', 'hidden-type-exo-Monday-1': '2', 'reps-Monday-1': '2', 'series-Monday-1': '2', 'weight-Monday-1': '0.0'}
     
-    return RedirectResponse(url="/schedule/printMonth")
+    return RedirectResponse(url="/schedule/printMonth", status_code=303)
 
 
 @schedule_router.get('/statistics')

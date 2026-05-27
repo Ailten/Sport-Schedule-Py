@@ -35,11 +35,32 @@ function addBlockInputExercice(btnTarget) {
 
     // build block inputs exercice-to-do.
     let exerciceToDoContainer = dayContainer.insertBefore(document.createElement('div'), lastDomChild);
-    exerciceToDoContainer.classList.add('exercice-to-do-container', 'card', 'card-body', 'mt-2');
+    exerciceToDoContainer.classList.add('exercice-to-do-container', 'card', 'card-body', 'mt-2', 'container-exo-card');
     exerciceToDoContainer.setAttribute('index-exo', indexExo);
 
 
     // fill block inputs exercice-to-do.
+    // remove button.
+    {
+        let typeExoContainer = exerciceToDoContainer.appendChild(document.createElement('div'));
+        typeExoContainer.classList.add('d-flex', 'flex-row-reverse');
+
+        let closeButton = typeExoContainer.appendChild(document.createElement('button'));
+        closeButton.setAttribute('type', 'button');
+        closeButton.classList.add('btn', 'btn-danger', 'fw-bold');
+        closeButton.innerText = 'X';
+
+        // event remove.
+        closeButton.addEventListener('click', (evnt) => {
+            let containerToDel = evnt.target;
+            do {
+                containerToDel = containerToDel.parentNode;
+            } while(! containerToDel.classList.contains('container-exo-card'));
+            containerToDel.parentNode.removeChild(containerToDel);  // remove.
+        });
+
+    }
+
     // type exercice.
     {
         let typeExoContainer = exerciceToDoContainer.appendChild(document.createElement('div'));
@@ -65,8 +86,8 @@ function addBlockInputExercice(btnTarget) {
             let valueInput = inputEnumExo.value.toLowerCase();
             let enumMatch = Array.from(document.querySelectorAll('#exercice-enum-ref > *')).map(e => {
                 return {
-                    value: e.innerText.toLowerCase(),
-                    id: e.getAttribute('value')
+                    value: e.getAttribute('value').toLowerCase(),
+                    id: e.getAttribute('data-id-value')
                 };
             }).find(e => e.value == valueInput);
             let hiddenInputEnumExo = document.querySelector(`input[name="hidden-type-exo-${dayStr}-${indexExo}"]`);
@@ -109,6 +130,7 @@ function addBlockInputExercice(btnTarget) {
         input.setAttribute('id', libeleInput);
         input.setAttribute('name', libeleInput);
         input.setAttribute('required', 'true');
+        input.setAttribute('placeholder', '3');
     }
 
     // series
@@ -127,6 +149,7 @@ function addBlockInputExercice(btnTarget) {
         input.setAttribute('id', libeleInput);
         input.setAttribute('name', libeleInput);
         input.setAttribute('required', 'true');
+        input.setAttribute('placeholder', '3');
     }
 
     // reps.
