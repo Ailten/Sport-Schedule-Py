@@ -23,8 +23,9 @@
                     <form action="#" method="POST">
 
                         {% for day_week in ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] %}
-                            <button class="btn btn-primary w-25" type="button" data-bs-toggle="collapse" data-bs-target=".block-day#{{day_week}}" aria-expanded="false" aria-controls="{{day_week}}">
+                            <button class="btn btn-primary w-25 d-flex justify-content-between" type="button" data-bs-toggle="collapse" data-bs-target=".block-day#{{day_week}}" aria-expanded="false" aria-controls="{{day_week}}">
                                 {{ day_week }}
+                                <i class="bi bi-caret-down ms-2"></i>
                             </button>
 
                             <div class="collapse mt-2 block-day" id="{{day_week}}">
