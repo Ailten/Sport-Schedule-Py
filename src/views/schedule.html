@@ -26,13 +26,9 @@
         </form>
 
         <div class="row row-cols-7 text-center fw-bold text-white rounded-top py-2 g-0 header-calendar-days">
-            <div>Monday</div>
-            <div>Tuesday</div>
-            <div>Wednesday</div>
-            <div>Thursday</div>
-            <div>Friday</div>
-            <div>Saturday</div>
-            <div>Sunday</div>
+            {% for day_week_str in ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] %}
+            <div>{{ day_week_str }}</div>
+            {% endfor %}
         </div>
 
         <div id="calendar-grid" class="row g-1 border border-top-0 rounded-bottom p-1 bg-light">

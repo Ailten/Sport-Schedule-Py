@@ -5,7 +5,7 @@ from datetime import datetime
 
 from src.dto.scheduleDto.scheduleCalendarDto import ScheduleCalendarDto
 from src.dto.scheduleDto.scheduleKcalDto import ScheduleKcalDto
-from ..services.scheduleService import ScheduleService
+from ..services import ScheduleService, ExerciceService
 import re
 from fastapi.responses import RedirectResponse
 
@@ -80,13 +80,21 @@ def printMonth(
 @schedule_router.get('/create')
 def createSchedule(
     request: Request,
-    schedule_service: ScheduleService=Depends(ScheduleService.getService)
+    exercice_service: ExerciceService=Depends(ExerciceService.getService)
 ):
     """
     Get page create a new Schedule.
     """
-    # redirect to schedule.
-    return template.TemplateResponse(name='create_schedule.html', request=request)
+
+    # get all exercices from DB to use as dataset in view.
+    exercices = [ {
+        'id': e.id,
+        'name': e.name
+    } for e in exercice_service.readAll() ]
+
+    return template.TemplateResponse(name='create_schedule.html', request=request, context={
+        'exercices': exercices
+    })
 
 @schedule_router.get('/statistics')
 def statistics(

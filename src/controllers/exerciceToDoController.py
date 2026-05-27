@@ -10,7 +10,7 @@ template = Jinja2Templates(directory='src/views')
 
 
 @exercice_to_do_router.post('/detailsWholeDay')
-def schedule(
+def scheduleDetailsDay(
     request: Request,
     date_exo: date = Form(),
     user_id: int|None = None,

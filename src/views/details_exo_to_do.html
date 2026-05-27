@@ -1,2 +1,69 @@
-<h1> TODO </h1>
-<p>{{exercice_to_do}}</p>
+{% extends 'base_page.html' %}
+
+
+{% block links_base %}
+<script src="http://127.0.0.1:8000/public/js/userForm.js" type="text/javascript"></script>
+{% endblock links_base %}
+
+
+{% set current_page = 'create_account' %}
+
+
+{% block main_base %}
+{% include 'errors_pop_up.html' %}
+<div class="container d-flex justify-content-center align-items-center container-center-h-big">
+    <div class="row w-100 justify-content-center">
+        <div class="col-md-6 col-lg-8">
+            
+            <div class="card shadow-sm border-0 px-4 py-4 rounded-3">
+                <div class="card-body">
+                    
+                    <h2 class="card-title text-center fw-bold mb-4 text-dark">TODO : details checkable</h2>
+                    
+                    <form action="#" method="POST">
+
+                        {% for day_week in ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] %}
+                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target=".block-day#{{day_week}}" aria-expanded="false" aria-controls="{{day_week}}">
+                            {{ day_week }}
+                        </button>
+                        
+                        <div class="collapse mt-2 block-day" id="{{day_week}}">
+                            <!--
+                            <div class="card card-body">
+                                Ceci est le contenu masqué qui se dévoile au clic !
+                            </div>
+                            -->
+
+                            <div class="mb-3 d-flex justify-content-center gap-2">
+                                <input type="button" class="btn btn-success btn-lg fw-semibold w-50" value="New Create" />
+                            </div>
+
+                        </div>
+
+                        <hr/>
+                        {% endfor %}
+
+                        <div class="mb-3">
+                            <label for="first-name" class="form-label text-secondary fs-7">First Name</label>
+                            <input type="text" 
+                                   class="form-control form-control-lg" 
+                                   id="first-name" 
+                                   name="first_name" 
+                                   placeholder="first-name" 
+                                   value="{% if user_params is defined %}{{user_params.first_name}}{% endif %}" 
+                                   required>
+                        </div>
+                        
+                        <div class="mb-3 d-flex justify-content-center gap-2">
+                            <button type="cancel" class="btn btn-danger btn-lg fw-semibold w-50" onclick="history.back()">Cancel</button>
+                            <button type="submit" class="btn btn-success btn-lg fw-semibold w-50">Create</button>
+                        </div>
+                        
+                    </form>
+                    
+                </div>
+            </div>
+            </div>
+    </div>
+</div>
+{% endblock main_base %}

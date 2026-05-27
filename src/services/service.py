@@ -26,7 +26,7 @@ class Service(ABC):
         return True
     
     def readAll(self) -> list:
-        return self.__session_db.query(self._model_type).all()
+        return self._session_db.query(self._model_type).all()
 
     def update(self, model_to_update) -> bool:
         self._session_db.commit()
