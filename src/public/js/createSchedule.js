@@ -69,6 +69,7 @@ function addBlockInputExercice(btnTarget) {
                     id: e.getAttribute('value')
                 };
             }).find(e => e.value == valueInput);
+            let hiddenInputEnumExo = document.querySelector(`input[name="hidden-type-exo-${dayStr}-${indexExo}"]`);
             
             if (
                 (valueInput === "" && inputEnumExo.hasAttribute('required'))  // input empty (when required).
@@ -77,14 +78,19 @@ function addBlockInputExercice(btnTarget) {
             ) {
                 inputEnumExo.classList.add('is-invalid');
                 inputEnumExo.classList.remove('is-valid');
-                inputEnumExo.removeAttribute('type-exo-id');
+                hiddenInputEnumExo.value = '-1';  // reset value hidden.
             } else {  // valide.
                 inputEnumExo.classList.add('is-valid');
                 inputEnumExo.classList.remove('is-invalid');
-                inputEnumExo.setAttribute('type-exo-id', enumMatch.id);
+                hiddenInputEnumExo.value = enumMatch.id;  // set value hidden.
             }
 
         });
+
+        let hiddenInput = typeExoContainer.appendChild(document.createElement('input'));
+        hiddenInput.setAttribute('type', 'hidden');
+        hiddenInput.setAttribute('name', `hidden-type-exo-${dayStr}-${indexExo}`);
+        hiddenInput.setAttribute('value', '-1');
     }
 
     // reps.
