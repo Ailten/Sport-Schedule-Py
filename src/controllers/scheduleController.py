@@ -1,13 +1,13 @@
 import calendar
-from fastapi import APIRouter, Request, Depends
+from fastapi import APIRouter, Request, Depends, Form
 from fastapi.templating import Jinja2Templates
-from datetime import datetime
+from datetime import datetime, date, timezone
 
-from src.dto.scheduleDto.scheduleCalendarDto import ScheduleCalendarDto
-from src.dto.scheduleDto.scheduleKcalDto import ScheduleKcalDto
+from src.dto import ScheduleCalendarDto, ScheduleKcalDto, ExerciceToDoCreateDto, ListContainerExerciceToDoCreateDto
 from ..services import ScheduleService, ExerciceService, ExerciceToDoService
 import re
 from fastapi.responses import RedirectResponse
+from src.models import Schedule
 
 
 schedule_router = APIRouter(prefix='/schedule', tags=['Schedule'])
@@ -97,17 +97,35 @@ def createSchedule(
     })
 
 @schedule_router.post('/create')
-async def createScheduleGetData(
+def createScheduleGetData(
     request: Request,
+    list_exercice_to_dos: ListContainerExerciceToDoCreateDto,
+    user_id: int|None=None,
+    schedule_service: ScheduleService=Depends(ScheduleService.getService),
     exercice_to_do_service: ExerciceToDoService=Depends(ExerciceToDoService.getService)
 ):
-    form_data = await request.form()
-    dict_data = dict(form_data)
+    # default user id log.
+    if user_id == None:
+        user_id = request.session.get('user')['id']
 
-    # TODO : insert dict (manage data).
-    # {'type-exo-Monday-0': 'Pompes', 'hidden-type-exo-Monday-0': '1', 'reps-Monday-0': '2', 'series-Monday-0': '2', 'weight-Monday-0': '0.0', 'type-exo-Monday-1': 'Squat', 'hidden-type-exo-Monday-1': '2', 'reps-Monday-1': '2', 'series-Monday-1': '2', 'weight-Monday-1': '0.0'}
-    
-    return RedirectResponse(url="/schedule/printMonth", status_code=303)
+    # get list of exercice to do create DTO (cast in exercice to do model).
+    list_etd = [ etd.toExerciceToDo() for etd in list_exercice_to_dos.exercice_to_dos ]
+
+
+    # make new schedule (get previous, if has one, cloture it, and make a new one)
+    hold_schedule = schedule_service.getCurrentScheduleOfAnUser(user_id)
+    date_new_schedule = date.today()
+    if hold_schedule != None:  # edit hold one.
+        hold_schedule.end_date = date_new_schedule
+        schedule_service.update(hold_schedule)
+    new_schedule = Schedule(
+        user_id=user_id,
+        exercice_to_dos=list_etd,
+        start_date=date_new_schedule
+    )
+    schedule_service.create(new_schedule)
+
+    return {'redirect_url': '/schedule/printMonth'}
 
 
 @schedule_router.get('/statistics')

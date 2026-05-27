@@ -10,7 +10,7 @@ if TYPE_CHECKING:
 @dataclass
 class ScheduleWeekDto():
     exercice_to_dos: list['ExerciceToDoCalendarDto']
-    exercice_to_dos_keys: dict[list[int]]
+    exercice_to_dos_keys: dict[int,list[int]]
     days_full_checked: list[int]
 
     @staticmethod
@@ -45,6 +45,8 @@ class ScheduleWeekDto():
 
         for day_of_month in range(1, days_in_month + 1):
             day_of_week = (days_before_month + day_of_month - 1) % 7 + 1
+            if not (day_of_week - 1) in self.exercice_to_dos_keys:
+                continue
             exo_keys = self.exercice_to_dos_keys[day_of_week - 1]
             exos = [ self.exercice_to_dos[ek] for ek in exo_keys ]
             exos_checked = [ e for e in exos if day_of_month in e.days_of_month_checked ]

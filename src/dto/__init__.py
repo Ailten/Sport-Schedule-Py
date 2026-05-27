@@ -5,5 +5,8 @@ from .userDto.userUpdateDto import UserUpdateDto
 
 from .scheduleDto.scheduleCalendarDto import ScheduleCalendarDto
 from .scheduleDto.scheduleWeekDto import ScheduleWeekDto
+from .scheduleDto.scheduleKcalDto import ScheduleKcalDto
 
 from .exerciceToDoDto.exerciceToDoCalendarDto import ExerciceToDoCalendarDto
+from .exerciceToDoDto.exerciceToDoCreateDto import ExerciceToDoCreateDto
+from .exerciceToDoDto.exerciceToDoCreateDto import ListContainerExerciceToDoCreateDto

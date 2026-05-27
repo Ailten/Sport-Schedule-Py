@@ -20,7 +20,7 @@
                     
                     <h2 class="card-title text-center fw-bold mb-4 text-dark">Create schedule</h2>
                     
-                    <form action="#" method="POST">
+                    <form id="form-create-schedule" data-url-dest="http://127.0.0.1:8000/schedule/create">
 
                         {% for day_week in ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] %}
                             <button class="btn btn-primary w-25 d-flex justify-content-between" type="button" data-bs-toggle="collapse" data-bs-target=".block-day#{{day_week}}" aria-expanded="false" aria-controls="{{day_week}}">
@@ -43,7 +43,7 @@
                         
                         <div class="mb-3 d-flex justify-content-center gap-2 mt-3">
                             <button type="cancel" class="btn btn-danger btn-lg fw-semibold w-50" onclick="history.back()">Cancel</button>
-                            <button type="submit" class="btn btn-success btn-lg fw-semibold w-50">Create</button>
+                            <button type="button" class="btn btn-success btn-lg fw-semibold w-50" id="button-submit">Create</button>
                         </div>
  
                         <datalist id="exercice-enum-ref">

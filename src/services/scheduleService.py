@@ -59,7 +59,7 @@ class ScheduleService(ServiceWithPK):
 #)
     
 
-    def getCurrentScheduleOfAnUser(self, user_id: int):
+    def getCurrentScheduleOfAnUser(self, user_id: int) -> Schedule|None:
         return self._session_db.query(self._model_type).filter(
             self._model_type.user_id == user_id and
             self._model_type.end_date == None

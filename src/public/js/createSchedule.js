@@ -1,5 +1,73 @@
 
 
+window.addEventListener('load', _ => {
+
+    // override submit form create schedule.
+    //document.getElementById('form-create-schedule').addEventListener('submit', async (evnt) => {
+    document.getElementById('button-submit').addEventListener('click', async (evnt) => {
+
+        // get form.
+        currentForm = evnt.target;
+        do {
+            currentForm = currentForm.parentNode;
+        } while(currentForm.tagName.toLowerCase() != 'form');
+
+        // cancel default call of form submit.
+        //evnt.preventDefault();
+
+        // re-build parameters of form.
+        let exerciceToDos = Object.values(  // cast dict key-obj to list obj.
+            Array.from(document.querySelectorAll('*[index-exo]')).map(e => {
+                return {
+                    exercice_id: e.querySelector('input[name^="hidden-type-exo"]').value,
+                    days_of_week: daysWeekEnum[e.querySelector('input[name^="type-exo"]').getAttribute('name').split('-')[2]],
+                    repetition: e.querySelector('input[name^="reps"]').value,
+                    series: e.querySelector('input[name^="series"]').value,
+                    additional_weight: Number(e.querySelector('input[name^="weight"]').value)
+                }
+            }).reduce((acc, e) => {  // merge values identique on many days distinct.
+                let uniqueKeyMerge = `${e.exercice_id}-${e.repetition}-${e.series}-${e.additional_weight}`;
+                if(!acc[uniqueKeyMerge]){
+                    acc[uniqueKeyMerge] = { ...e };  // add new row with key.
+                }else{
+                    acc[uniqueKeyMerge].days_of_week += e.days_of_week;  // increase previous row with value of same key.
+                }
+                return acc;
+            }, {})
+        );
+
+        // call end point form.
+        await fetch(currentForm.getAttribute('data-url-dest'), {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                exercice_to_dos: exerciceToDos
+            })
+        }).then(response => {
+            if (!response.ok) {
+                console.error(response);
+                throw new Error('error request.');
+            }
+            return response.json();
+        }).then(data => {
+            window.location.href = data.redirect_url;
+        }).catch(err => {
+            // todo: mark pop up error.
+            return;
+        });
+        
+        // error.
+        if (!response.ok) {
+            console.error(response);
+            throw new Error('error request.');
+        }
+
+    });
+
+});
+
 
 function addBlockInputExercice(btnTarget) {
 
@@ -131,6 +199,7 @@ function addBlockInputExercice(btnTarget) {
         input.setAttribute('name', libeleInput);
         input.setAttribute('required', 'true');
         input.setAttribute('placeholder', '3');
+        input.setAttribute('min', '0');
     }
 
     // series
@@ -150,9 +219,10 @@ function addBlockInputExercice(btnTarget) {
         input.setAttribute('name', libeleInput);
         input.setAttribute('required', 'true');
         input.setAttribute('placeholder', '3');
+        input.setAttribute('min', '0');
     }
 
-    // reps.
+    // weight.
     {
         let typeExoContainer = exerciceToDoContainer.appendChild(document.createElement('div'));
         let libeleInput = `weight-${dayStr}-${indexExo}`;  // make an unique libele
@@ -169,7 +239,18 @@ function addBlockInputExercice(btnTarget) {
         input.setAttribute('id', libeleInput);
         input.setAttribute('name', libeleInput);
         input.setAttribute('value', '0.0');
+        input.setAttribute('required', 'true');
     }
 
 }
 
+
+const daysWeekEnum = {
+    'Monday': 1,
+    'Tuesday': 2, 
+    'Wednesday': 4, 
+    'Thursday': 8, 
+    'Friday': 16, 
+    'Saturday': 32, 
+    'Sunday': 64
+};
