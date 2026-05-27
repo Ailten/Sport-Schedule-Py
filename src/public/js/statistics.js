@@ -7,10 +7,14 @@ window.addEventListener('load', _ => {
         inputHidden => inputHidden.value
     );
 
-    // send data to graph chart.
-    generateGraph(
-        kcalDays
-    );
+    if(kcalDays.length != 0){
+        // send data to graph chart.
+        generateGraph(
+            kcalDays
+        );
+    }else{
+        // user has no schedule to make statistics.
+    }
 
 });
 

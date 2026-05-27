@@ -149,8 +149,10 @@ def statistics(
     # get the last schedule of user (the one whith no date end)
     current_schedule = schedule_service.getCurrentScheduleOfAnUser(user_id)
 
-    # cast as DTO object, to take only parameter whant (and print easyli).
-    schedule_dto = ScheduleKcalDto.fromSchedule(current_schedule)
+    schedule_dto = []
+    if current_schedule != None:
+        # cast as DTO object, to take only parameter whant (and print easyli).
+        schedule_dto = ScheduleKcalDto.fromSchedule(current_schedule)
 
     # redirect to schedule.
     return template.TemplateResponse(name='statistics.html', request=request, context={

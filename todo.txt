@@ -1,12 +1,9 @@
 
-// load data on page statistics.
 // (~) --> add input to edit week selected on page statistics.
 
-// page/form new schedule.
 // (~) --> allow user to create their own custome exercice (need to edit DB).
 
 // page/form details exercice du jour.
-// --> end point, cocher tout la journée.
 
 // (~) page parameters 
 
@@ -16,9 +13,4 @@
 
 // ----------------------->
 
-// verify month futur, if take the schedule current.
-// verify check all day.
-
-// test unitaire.
-
-// TODO : debug button i "details exercice of a day" (param date_exo not take).
+// (~) test unitaire.
