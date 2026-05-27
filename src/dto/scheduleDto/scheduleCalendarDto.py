@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 import calendar
 from .scheduleWeekDto import ScheduleWeekDto
+from datetime import date
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
@@ -30,10 +31,15 @@ class ScheduleCalendarDto():
         # generate key mapping for days of month.
         self.schedules_keys=dict()
         for day_of_month in range(1, days_in_month + 1):
-            key_schedule = next([ k for k,v in enumerate(schedules) if (
-                v.start_date.day <= day_of_month and
-                (v.end_date == None or v.end_date.day >= day_of_month)
+            date_current_day = date(year, month, day_of_month)
+            key_schedule = next([ k for k,v in enumerate(schedules) if (  # take keys of schedule matching the day of month.
+                date_current_day >= v.start_date and 
+                (
+                    v.end_date == None or
+                    date_current_day <= v.end_date
+                )
             )].__iter__(), None)
+            print(key_schedule)
             if key_schedule == None:  # skip if no schedule for this day.
                 continue
             self.schedules_keys[day_of_month] = key_schedule

@@ -38,8 +38,14 @@ def schedule(
     exercices_to_dos = exercice_to_do_service.getAllForADayNotChecked(date_exo)
 
     check_exercice_service.checkMany(exercices_to_dos, date_check)
+    
+    # get last param month used.
+    param_month = request.session.get('month_ask_schedule', '')
+    if param_month != '':
+        param_month = f'month_ask={param_month}'
 
-    return RedirectResponse(url="/schedule/printMonth", status_code=303)
+    # reload with same month as the last ask (if has one).
+    return RedirectResponse(url=f"/schedule/printMonth?{param_month}", status_code=303)
 
 
     

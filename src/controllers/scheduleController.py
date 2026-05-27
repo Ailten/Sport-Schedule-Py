@@ -1,7 +1,7 @@
 import calendar
 from fastapi import APIRouter, Request, Depends, Form
 from fastapi.templating import Jinja2Templates
-from datetime import datetime, date, timezone
+from datetime import datetime, date, timezone, timedelta
 
 from src.dto import ScheduleCalendarDto, ScheduleKcalDto, ExerciceToDoCreateDto, ListContainerExerciceToDoCreateDto
 from ..services import ScheduleService, ExerciceService, ExerciceToDoService
@@ -55,6 +55,9 @@ def printMonth(
         today.month == month and
         today.year == year
     )
+
+    # save month ask.
+    request.session['month_ask_schedule'] = f'{year}-{month}'
 
     # get all schedule for the month ask.
     schedules_use_in_month = schedule_service.getMonthOfAnUser(user_id, year, month)
@@ -116,7 +119,8 @@ def createScheduleGetData(
     hold_schedule = schedule_service.getCurrentScheduleOfAnUser(user_id)
     date_new_schedule = date.today()
     if hold_schedule != None:  # edit hold one.
-        hold_schedule.end_date = date_new_schedule
+        date_cloture = date_new_schedule - timedelta(1)  # cloture one day before, start new one.
+        hold_schedule.end_date = date_cloture
         schedule_service.update(hold_schedule)
     new_schedule = Schedule(
         user_id=user_id,
