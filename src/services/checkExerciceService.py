@@ -2,7 +2,9 @@ from .service import Service
 from sqlalchemy.orm import Session
 from ..models.checkExercice import CheckExercice
 from ..models.exerciceToDo import ExerciceToDo
-from datetime import datetime, timezone
+from datetime import datetime, timezone, date
+from sqlalchemy.sql import and_, or_
+from sqlalchemy import cast, Date as SqlDate
 
 class CheckExerciceService(Service):
 
@@ -32,4 +34,11 @@ class CheckExerciceService(Service):
             self._session_db.add(checkExercice)
         self._session_db.commit()
         
-        
+    # get check exercice by an exercice to do and a date.
+    def getByExoIdAndDate(self, exercice_to_do_id: int, date_ask: date) -> CheckExercice|None:
+        return self._session_db.query(self._model_type).filter(
+            and_(
+                CheckExercice.exercice_to_do_id == exercice_to_do_id,
+                cast(CheckExercice.date_check, SqlDate) == date_ask
+            )
+        ).first()

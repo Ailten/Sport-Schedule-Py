@@ -57,12 +57,6 @@ window.addEventListener('load', _ => {
             // todo: mark pop up error.
             return;
         });
-        
-        // error.
-        if (!response.ok) {
-            console.error(response);
-            throw new Error('error request.');
-        }
 
     });
 
@@ -116,7 +110,9 @@ function addBlockInputExercice(btnTarget) {
         let closeButton = typeExoContainer.appendChild(document.createElement('button'));
         closeButton.setAttribute('type', 'button');
         closeButton.classList.add('btn', 'btn-danger', 'fw-bold');
-        closeButton.innerText = 'X';
+        let closeButtonIco = closeButton.appendChild(document.createElement('i'));
+        closeButtonIco.classList.add('bi', 'bi-x');
+        //closeButton.innerText = 'X';
 
         // event remove.
         closeButton.addEventListener('click', (evnt) => {

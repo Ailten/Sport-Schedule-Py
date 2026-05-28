@@ -10,3 +10,6 @@ from .scheduleDto.scheduleKcalDto import ScheduleKcalDto
 from .exerciceToDoDto.exerciceToDoCalendarDto import ExerciceToDoCalendarDto
 from .exerciceToDoDto.exerciceToDoCreateDto import ExerciceToDoCreateDto
 from .exerciceToDoDto.exerciceToDoCreateDto import ListContainerExerciceToDoCreateDto
+from .exerciceToDoDto.exerciceToDoDetailsDto import ExerciceToDoDetailsDto
+
+from .checkExercice.checkExerciceFormDto import CheckExerciceFormDto

@@ -8,9 +8,12 @@
 // (~) page parameters 
 
 // (~) page list users, for role admin.
+// class permission.
 
 // verification user log is role admin, for param user_id default.
 
 // ----------------------->
 
 // (~) test unitaire.
+
+// (~) endpoint to reset DB for demo.

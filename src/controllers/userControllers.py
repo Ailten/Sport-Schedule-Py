@@ -5,6 +5,7 @@ from ..dto import UserPrintDto, UserCreateDto, UserUpdateDto
 from ..services import UserService
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse
+from ..utils import Permission
 
 user_router = APIRouter(prefix='/user', tags=['User'])
 template = Jinja2Templates(directory='src/views')
@@ -155,9 +156,16 @@ def updateAccount(
     Get page Update Account form.
     """
 
-    # get user_id from user log by default. 
-    if user_id == None:
-        user_id = request.session.get('user').get('id')
+    # take id user log by default.
+    try:
+        user_id = Permission.checkUserIdParam(user_id, request)
+    except Exception as err:
+        # redirect to schedule.
+        request.session['errors'] = [{
+            'title': repr(err),
+            'message': repr(err)
+        }]
+        return RedirectResponse(url='/schedule/printMonth', status_code=303)
 
     user = user_service.readById(user_id)
 
@@ -180,8 +188,15 @@ def updateAccount(
     """
 
     # take id user log by default.
-    if user_id == None:
-        user_id = request.session.get('user')['id']
+    try:
+        user_id = Permission.checkUserIdParam(user_id, request)
+    except Exception as err:
+        # redirect to schedule.
+        request.session['errors'] = [{
+            'title': repr(err),
+            'message': repr(err)
+        }]
+        return RedirectResponse(url='/schedule/printMonth', status_code=303)
 
     user = user_service.readById(user_id)
     

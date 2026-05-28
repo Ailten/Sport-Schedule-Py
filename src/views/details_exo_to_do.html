@@ -2,7 +2,8 @@
 
 
 {% block links_base %}
-<script src="http://127.0.0.1:8000/public/js/userForm.js" type="text/javascript"></script>
+<link href="http://127.0.0.1:8000/public/css/detailsExo.css" rel="stylesheet">
+<script src="http://127.0.0.1:8000/public/js/checkAnExo.js" type="text/javascript"></script>
 {% endblock links_base %}
 
 
@@ -18,47 +19,45 @@
             <div class="card shadow-sm border-0 px-4 py-4 rounded-3">
                 <div class="card-body">
                     
-                    <h2 class="card-title text-center fw-bold mb-4 text-dark">TODO : details checkable</h2>
+                    <h2 class="card-title text-center fw-bold mb-4 text-dark">Details {{day_week}}</h2>
+
+                    <input type="hidden" value="{{date_ask}}" id="date-ask"/>
                     
-                    <form action="#" method="POST">
-
-                        {% for day_week in ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] %}
-                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target=".block-day#{{day_week}}" aria-expanded="false" aria-controls="{{day_week}}">
-                            {{ day_week }}
-                        </button>
+                    {% for exercice_to_do in exercice_to_dos %}
                         
-                        <div class="collapse mt-2 block-day" id="{{day_week}}">
-                            <!--
-                            <div class="card card-body">
-                                Ceci est le contenu masqué qui se dévoile au clic !
+                        <div class="exercice-to-do-container card card-body mt-2" index-exo-to-do="{{exercice_to_do.id}}">
+                            <div class="d-flex flex-row-reverse">
+                                <button type="button" class="btn btn-success fw-bold" onclick="checkAnExo(this)">
+                                    <i class="bi bi-check"></i>
+                                </button>
                             </div>
-                            -->
-
-                            <div class="mb-3 d-flex justify-content-center gap-2">
-                                <input type="button" class="btn btn-success btn-lg fw-semibold w-50" value="New Create" />
+                            <!-- mb-3 mt-3 -->
+                            <div class="d-flex justify-content-center gap-2">
+                                <div class="text-secondary w-25">Exercice</div>
+                                <div class="w-25">{{exercice_to_do.exercice_name}}</div>
                             </div>
-
+                            <div class="d-flex justify-content-center gap-2">
+                                <div class="text-secondary w-25">Repetitions</div>
+                                <div class="w-25">{{exercice_to_do.repetition}}</div>
+                            </div>
+                            <div class="d-flex justify-content-center gap-2">
+                                <div class="text-secondary w-25">Series</div>
+                                <div class="w-25">{{exercice_to_do.series}}</div>
+                            </div>
+                            <div class="d-flex justify-content-center gap-2">
+                                <div class="text-secondary w-25">Weight Add</div>
+                                <div class="w-25">{{exercice_to_do.additional_weight}}</div>
+                            </div>
                         </div>
 
-                        <hr/>
-                        {% endfor %}
-
-                        <div class="mb-3">
-                            <label for="first-name" class="form-label text-secondary fs-7">First Name</label>
-                            <input type="text" 
-                                   class="form-control form-control-lg" 
-                                   id="first-name" 
-                                   name="first_name" 
-                                   placeholder="first-name" 
-                                   value="{% if user_params is defined %}{{user_params.first_name}}{% endif %}" 
-                                   required>
-                        </div>
+                    {% endfor %}
                         
-                        <div class="mb-3 d-flex justify-content-center gap-2">
-                            <button type="cancel" class="btn btn-danger btn-lg fw-semibold w-50" onclick="history.back()">Cancel</button>
-                            <button type="submit" class="btn btn-success btn-lg fw-semibold w-50">Create</button>
+                    <form action="/checkExercice/checkWholeDay" method="POST" class="form-inline">
+                        <div class="mb-3 d-flex justify-content-center gap-2 mt-3">
+                            <button type="button" class="btn btn-danger btn-lg fw-semibold w-50" onclick="window.location.href='/schedule/printMonth?month_ask={{date_ask_month}}'">Cancel</button>
+                            <button type="submit" class="btn btn-success btn-lg fw-semibold w-50" onclick="checkAllExoDay(this)">Check All</button>
+                            <input type="hidden" name="date_exo" value="{{date_ask}}"/>
                         </div>
-                        
                     </form>
                     
                 </div>

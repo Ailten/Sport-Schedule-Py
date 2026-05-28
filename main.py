@@ -29,7 +29,7 @@ def test(request: Request) -> dict:
     """
     Ping.
     """
-    return { 'value': 'pong' }
+    return { 'response': 'pong' }
 
 
 @app.get('/')
@@ -40,3 +40,12 @@ def index(
     main endpoint, redirect to page login.
     """
     return RedirectResponse(url="/user/login")
+
+
+@app.get('/reset')
+def test(request: Request) -> dict:
+    """
+    Reset DB for demo.
+    """
+    
+    return { 'response': 'Done' }

@@ -1,0 +1,5 @@
+
+.exercice-to-do-checked {
+    --bs-card-border-color: rgb(108, 240, 108);
+    outline: solid 3px #b5ffb5;
+}

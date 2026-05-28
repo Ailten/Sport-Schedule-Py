@@ -39,7 +39,6 @@ class ScheduleCalendarDto():
                     date_current_day <= v.end_date
                 )
             )].__iter__(), None)
-            print(key_schedule)
             if key_schedule == None:  # skip if no schedule for this day.
                 continue
             self.schedules_keys[day_of_month] = key_schedule

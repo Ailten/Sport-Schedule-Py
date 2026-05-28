@@ -3,6 +3,8 @@ from fastapi.templating import Jinja2Templates
 from datetime import datetime, timezone, date
 from ..services import CheckExerciceService, ExerciceToDoService
 from fastapi.responses import RedirectResponse
+from ..dto import CheckExerciceFormDto
+from ..utils import Permission
 
 
 check_exercice_router = APIRouter(prefix='/checkExercice', tags=['checkExercice'])
@@ -10,7 +12,7 @@ template = Jinja2Templates(directory='src/views')
 
 
 @check_exercice_router.post('/checkWholeDay')
-def schedule(
+def checkWholeDay(
     request: Request,
     date_exo: date = Form(),
     user_id: int|None = None,
@@ -22,9 +24,16 @@ def schedule(
     Check a whole day of exercice.
     """
 
-    # default user.
-    if user_id == None:
-        user_id = request.session.get('user')['id']
+    # take id user log by default.
+    try:
+        user_id = Permission.checkUserIdParam(user_id, request)
+    except Exception as err:
+        # redirect to schedule.
+        request.session['errors'] = [{
+            'title': repr(err),
+            'message': repr(err)
+        }]
+        return RedirectResponse(url='/schedule/printMonth', status_code=303)
 
     # default date check now.
     if date_check == None:
@@ -46,6 +55,68 @@ def schedule(
 
     # reload with same month as the last ask (if has one).
     return RedirectResponse(url=f"/schedule/printMonth?{param_month}", status_code=303)
+
+
+@check_exercice_router.post('/checkAnExo')
+def checkAnExo(
+    request: Request,
+    check_exercice_form_dto: CheckExerciceFormDto,
+    user_id: int|None = None,
+    exercice_to_do_service: ExerciceToDoService=Depends(ExerciceToDoService.getService),
+    check_exercice_service: CheckExerciceService=Depends(CheckExerciceService.getService)
+):
+    """
+    Check an exercice to do.
+    """
+
+    # take id user log by default.
+    try:
+        user_id = Permission.checkUserIdParam(user_id, request)
+    except Exception as err:
+        # redirect to schedule.
+        request.session['errors'] = [{
+            'title': repr(err),
+            'message': repr(err)
+        }]
+        return { 'is_success': False, 'redirect_url': '/exerciceToDo/detailsWholeDay' }
+    
+    # verify if exercice id is connected.
+    exercice_to_do = exercice_to_do_service.readById(check_exercice_form_dto.id_exo_to_do)
+    if exercice_to_do == None:
+        request.session['errors'] = [{
+            'title': 'No exercice found !',
+            'message': 'No exercice found.'
+        }]
+        return { 'is_success': False, 'redirect_url': '/exerciceToDo/detailsWholeDay' }
+    
+    # verify if already check for this day.
+    check_already = check_exercice_service.getByExoIdAndDate(
+        check_exercice_form_dto.id_exo_to_do, 
+        check_exercice_form_dto.date_exo
+    )
+    if check_already != None:
+        request.session['errors'] = [{
+            'title': 'Already check !',
+            'message': 'Already check.'
+        }]
+        return { 'is_success': False, 'redirect_url': '/exerciceToDo/detailsWholeDay' }
+
+    # verify date.
+    if check_exercice_form_dto.date_exo != check_exercice_form_dto.date_checked.date:
+        check_exercice_form_dto.date_checked = date(
+            check_exercice_form_dto.date_exo.year, 
+            check_exercice_form_dto.date_exo.month, 
+            check_exercice_form_dto.date_exo.day
+        )
+
+    # create check_exercice.
+    check_exercice = check_exercice_form_dto.toCheckExercice()
+    check_exercice_service.create(check_exercice)
+    
+    return { 'is_success': True }
+
+    
+
 
 
     

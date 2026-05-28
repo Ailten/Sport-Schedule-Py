@@ -8,6 +8,7 @@ from ..services import ScheduleService, ExerciceService, ExerciceToDoService
 import re
 from fastapi.responses import RedirectResponse
 from src.models import Schedule
+from ..utils import Permission
 
 
 schedule_router = APIRouter(prefix='/schedule', tags=['Schedule'])
@@ -34,9 +35,16 @@ def printMonth(
     Get schedule of an user and render it on view schedule.
     """
 
-    # take user log by default.
-    if user_id == None:
-        user_id = request.session.get('user').get('id')
+    # take id user log by default.
+    try:
+        user_id = Permission.checkUserIdParam(user_id, request)
+    except Exception as err:
+        # redirect to schedule.
+        request.session['errors'] = [{
+            'title': repr(err),
+            'message': repr(err)
+        }]
+        return RedirectResponse(url='/schedule/printMonth', status_code=303)
 
     # take current month by default.
     if month_ask == None:
@@ -76,8 +84,7 @@ def printMonth(
     }
     errors = request.session.get('errors', None)  # include errors from redirction (if has one).
     if errors != None:
-        del request.session['errors']
-        context['errors'] = errors
+        context['errors'] = request.session.pop('errors')
     return template.TemplateResponse(name='schedule.html', request=request, context=context)
 
 @schedule_router.get('/create')
@@ -107,9 +114,16 @@ def createScheduleGetData(
     schedule_service: ScheduleService=Depends(ScheduleService.getService),
     exercice_to_do_service: ExerciceToDoService=Depends(ExerciceToDoService.getService)
 ):
-    # default user id log.
-    if user_id == None:
-        user_id = request.session.get('user')['id']
+    # take id user log by default.
+    try:
+        user_id = Permission.checkUserIdParam(user_id, request)
+    except Exception as err:
+        # redirect to schedule.
+        request.session['errors'] = [{
+            'title': repr(err),
+            'message': repr(err)
+        }]
+        return RedirectResponse(url='/schedule/printMonth', status_code=303)
 
     # get list of exercice to do create DTO (cast in exercice to do model).
     list_etd = [ etd.toExerciceToDo() for etd in list_exercice_to_dos.exercice_to_dos ]
@@ -142,9 +156,16 @@ def statistics(
     Get page statistics for the current schedule.
     """
 
-    # default take id of user log.
-    if user_id == None:
-        user_id = request.session.get('user')['id']
+    # take id user log by default.
+    try:
+        user_id = Permission.checkUserIdParam(user_id, request)
+    except Exception as err:
+        # redirect to schedule.
+        request.session['errors'] = [{
+            'title': repr(err),
+            'message': repr(err)
+        }]
+        return RedirectResponse(url='/schedule/printMonth', status_code=303)
 
     # get the last schedule of user (the one whith no date end)
     current_schedule = schedule_service.getCurrentScheduleOfAnUser(user_id)

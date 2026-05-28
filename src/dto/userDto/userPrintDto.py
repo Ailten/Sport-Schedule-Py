@@ -38,13 +38,6 @@ class UserPrintDto():
             imc=user.imc,
             role_name=user.role.name
         )
-
-    #def __dict__(self) -> dict[str, any]:
-    #    user_dict = super().__dict__
-    #    user_dict = { k:v for k,v in user_dict.items() if not callable(v) and not isinstance(v, (types.MethodType, types.FunctionType)) }  # drop method.
-    #    user_dict['birth_date'] = self.birth_date.strftime('%d/%m/%Y')  # date to string.
-    #    print(user_dict)
-    #    return user_dict
     
     def __iter__(self):
         for k,v in self.__dict__.items():

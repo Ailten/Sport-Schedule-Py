@@ -4,6 +4,7 @@ from ..models import ExerciceToDo, Schedule, CheckExercice
 from datetime import date
 import calendar
 from sqlalchemy.sql import and_, or_
+from sqlalchemy import cast, Date as SqlDate
 
 class ExerciceToDoService(ServiceWithPK):
 
@@ -22,7 +23,10 @@ class ExerciceToDoService(ServiceWithPK):
             Schedule
         ).join(
             CheckExercice,
-            and_(CheckExercice.exercice_to_do_id == ExerciceToDo.id, CheckExercice.date_check == date_ask),
+            and_(
+                CheckExercice.exercice_to_do_id == ExerciceToDo.id, 
+                cast(CheckExercice.date_check, SqlDate) == date_ask
+            ),
             isouter=True
         ).filter(
             and_(
@@ -51,7 +55,10 @@ class ExerciceToDoService(ServiceWithPK):
             Schedule
         ).join(
             CheckExercice,
-            and_(CheckExercice.exercice_to_do_id == ExerciceToDo.id, CheckExercice.date_check == date_ask),
+            and_(
+                CheckExercice.exercice_to_do_id == ExerciceToDo.id, 
+                cast(CheckExercice.date_check, SqlDate) == date_ask
+            ),
             isouter=True
         ).filter(
             and_(
