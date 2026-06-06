@@ -12,12 +12,17 @@ async function checkAnExo(target) {
         exerciceContainer = exerciceContainer.parentNode;
     } while(! exerciceContainer.classList.contains('exercice-to-do-container'));
 
+    // already checked (based on frontend only).
+    //if(exerciceContainer.hasAttribute('exercice-to-do-checked')){
+    //    return;
+    //}
+
     let dateAsk = document.getElementById('date-ask').value;
 
     let checkExerciceFormDto = {
         id_exo_to_do: Number(exerciceContainer.getAttribute('index-exo-to-do')),
-        date_exo: dateAsk,  // TODO: Cast Date.  // Date.parse(dateAsk)  .toISOString()  new Date(dateAskArr[0], dateAskArr[1], dateAskArr[2])
-        date_checked: new Date().toISOString() //new Date()
+        date_exo: dateAsk,
+        date_checked: new Date().toISOString()
     }
     
     // make cooldown button (durring fetch call).
@@ -35,14 +40,19 @@ async function checkAnExo(target) {
             throw new Error('error request.');
         }
         return response.json();
-    }).then(data => {
+    }).then(async data => {
 
         if(data.is_success){
             // mark the exercice to do as checked.
             exerciceContainer.classList.add('exercice-to-do-checked');
         }else{
             if(data.redirect_url !== undefined){
-                window.location.href = data.redirect_url;
+
+                // reload page (with error message).
+                await redirectPost(data.redirect_url, {
+                    'date_exo': dateAsk
+                });
+                return;
             }
         }
 

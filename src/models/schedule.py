@@ -2,10 +2,10 @@ from .database import Base
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import ForeignKey, CheckConstraint
 from datetime import date
+from .user import User
 
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
-    from .user import User
     from src.models.exerciceToDo import ExerciceToDo
 
 class Schedule(Base):

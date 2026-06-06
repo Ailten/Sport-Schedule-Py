@@ -2,10 +2,11 @@ from .database import Base
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import ForeignKey
 from datetime import datetime, timezone
+from .exerciceToDo import ExerciceToDo
 
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
-    from .exerciceToDo import ExerciceToDo
+    pass
 
 class CheckExercice(Base):
     __tablename__ = 'check_exercices'

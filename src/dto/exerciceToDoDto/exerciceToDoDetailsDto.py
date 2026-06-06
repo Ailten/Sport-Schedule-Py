@@ -23,6 +23,10 @@ class ExerciceToDoDetailsDto():
             series=exerciceToDo.series,
             additional_weight=exerciceToDo.additional_weight,
 
-            check = next([ True for etd in exerciceToDo.check_exercices if etd.date_check.date == date_day ].__iter__(), False)
+            check = next([ True for etd in exerciceToDo.check_exercices if (
+                etd.date_check.year == date_day.year and 
+                etd.date_check.month == date_day.month and 
+                etd.date_check.day == date_day.day 
+            ) ].__iter__(), False)
         )
 

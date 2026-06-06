@@ -3,11 +3,11 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import ForeignKey, CheckConstraint
 from sqlalchemy.ext.hybrid import hybrid_method
 from .daysOfWeek import DaysOfWeek
+from .schedule import Schedule
+from .exercice import Exercice
 
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
-    from .schedule import Schedule
-    from .exercice import Exercice
     from .checkExercice import CheckExercice
 
 class ExerciceToDo(Base):

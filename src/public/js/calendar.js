@@ -2,11 +2,22 @@
 window.addEventListener('load', _ => {
 
     // event to actualise page (by endpoint), when change value of month input.
-    document.getElementById('month-picker').addEventListener('change', (evnt) => {
+    Array.prototype.forEach.call(
+        document.querySelectorAll('#month-picker, #year-picker'),
+        selectPicker => {
 
-        document.getElementById('form-actualise-schedule').submit();
+            selectPicker.addEventListener('change', (evnt) => {
 
-    });
+                month = document.getElementById('month-picker').value;
+                month = (month < 10? '0': '') + month;
+                year = document.getElementById('year-picker').value;
+                document.getElementById('month_ask').value = (`${year}-${month}`);
+                document.getElementById('form-actualise-schedule').submit();
+
+            });
+
+        }
+    );
 
     // event to check all exercice from calendar.
     Array.prototype.forEach.call(

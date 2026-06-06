@@ -73,7 +73,9 @@ def printMonth(
     schedules_calendar_dto = ScheduleCalendarDto.fromListSchedule(schedules_use_in_month, year, month)
 
     context = {
-        'month_ask': month_ask,  # string value, to assigne in input.
+        'month_year_ask': month_ask,  # string value, to assigne in input.
+        'month_ask': month,
+        'year_ask': year,
         'days_skip_first_week': days_skip_first_week, 
         'days_in_month': days_in_month,
         

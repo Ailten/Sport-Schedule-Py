@@ -20,9 +20,30 @@
                     <label for="month-picker" class="form-label fw-bold mb-0">Month :</label>
                 </div>
                 <div class="col-auto">
-                    <input type="month" id="month-picker" name="month_ask" class="form-control" value="{{month_ask}}">
+                    <select id="month-picker" class="form-select">
+                        {% for c_month_id, c_month_str in [(1, 'January'), (2, 'February'), (3, 'March'), (4, 'April'), (5, 'May'), (6, 'June'), (7, 'July'), (8, 'August'), (9, 'September'), (10, 'October'), (11, 'November'), (12, 'December')] %}
+                            <option value="{{c_month_id}}" 
+                                    {% if c_month_id == month_ask %}selected{% endif %}>
+                                {{c_month_str}}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <select id="year-picker" class="form-select">
+                        {% for c_year in range(year_ask-6, year_ask+5) %}
+                            <option value="{{c_year}}"
+                                    {% if c_year == year_ask %}selected{% endif %}>
+                                {{c_year}}
+                            </option>
+                        {% endfor %}
+                    </select>
                 </div>
             </div>
+            <!--
+            <input type="month" id="month-picker" name="month_ask" class="form-control" value="{{month_ask}}">
+            -->
+            <input type="hidden" name="month_ask" id="month_ask">
         </form>
 
         <div class="row row-cols-7 text-center fw-bold text-white rounded-top py-2 g-0 header-calendar-days">
@@ -73,13 +94,13 @@
                                         <div>
                                             <i class="bi bi-check-lg check-whole-day" day-of-month="{{day_of_month}}"></i>
                                         </div>
-                                        <input type="hidden" name="date_exo" value="{{month_ask}}-{% if day_of_month < 10 %}0{% endif %}{{day_of_month}}"/>
+                                        <input type="hidden" name="date_exo" value="{{month_year_ask}}-{% if day_of_month < 10 %}0{% endif %}{{day_of_month}}"/>
                                     </form>
                                     <form action="/exerciceToDo/detailsWholeDay" method="POST" class="form-inline">
                                         <div>
                                             <i class="bi bi-three-dots details-whole-day"></i>
                                         </div>
-                                        <input type="hidden" name="date_exo" value="{{month_ask}}-{% if day_of_month < 10 %}0{% endif %}{{day_of_month}}"/>
+                                        <input type="hidden" name="date_exo" value="{{month_year_ask}}-{% if day_of_month < 10 %}0{% endif %}{{day_of_month}}"/>
                                     </form>
                                     {% endif %}
                                 </div>

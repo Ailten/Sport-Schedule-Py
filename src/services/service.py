@@ -46,5 +46,5 @@ class ServiceWithPK(Service):
         if not hasattr(self._model_type, 'id'):
             raise Exception(f'can\'t init service with {self._model_type.__class__} as model_type (no primary key)')
 
-    def readById(self, model_id: int) -> any|None:
+    def readById(self, model_id: int) -> any:
         return self._session_db.query(self._model_type).filter(self._model_type.id == model_id).first()

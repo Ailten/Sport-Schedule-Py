@@ -3,10 +3,11 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import Enum as EnumSQL, CheckConstraint, ForeignKey, text, Unicode, Column
 from datetime import date, timezone, datetime
 from .gender import Gender
+from .role import Role
 
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
-    from role import Role
+    pass
 
 class User(Base):
     __tablename__ = 'users'
