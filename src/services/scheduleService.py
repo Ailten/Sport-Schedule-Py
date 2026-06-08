@@ -64,3 +64,8 @@ class ScheduleService(ServiceWithPK):
             self._model_type.user_id == user_id and
             self._model_type.end_date == None
         ).first()
+    
+    def getAllSchedulesOfAnUser(self, user_id: int) -> list['Schedule']:
+        return self._session_db.query(self._model_type).filter(
+            self._model_type.user_id == user_id
+        ).all()

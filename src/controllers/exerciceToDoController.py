@@ -36,7 +36,7 @@ def scheduleDetailsDay(
         return RedirectResponse(url='/schedule/printMonth', status_code=303)
 
     # get all exercice to do for a day.
-    exercice_to_dos = exercice_to_do_service.getAllForADay(date_exo)
+    exercice_to_dos = exercice_to_do_service.getAllForADay(user_id, date_exo)
 
     # cast as DTO for filter data not need.
     exercice_to_dos_dto = [ ExerciceToDoDetailsDto.fromExerciceToDo(etd, date_exo) for etd in exercice_to_dos ]

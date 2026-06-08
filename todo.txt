@@ -11,8 +11,22 @@
 
 // verification user log is role admin, for param user_id default.
 
+
 // ----------------------->
 
 // (~) test unitaire.
 
 // (~) endpoint to reset DB for demo.
+// !!! sanitize DB.
+// !!! create a scenario for demo.
+
+
+// -----------------------> memo cmd.
+
+source .venv/bin/activate
+uvicorn main:app --reload
+
+http://127.0.0.1:8000
+
+sudo -u postgres psql
+\c sport_tracker

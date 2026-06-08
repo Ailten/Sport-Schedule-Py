@@ -45,7 +45,7 @@ class ExerciceToDoService(ServiceWithPK):
         ).all()
     
 
-    def getAllForADay(self, date_ask: date) -> list['ExerciceToDo']:
+    def getAllForADay(self, user_id: int, date_ask: date) -> list['ExerciceToDo']:
 
         days_befor_month, _ = calendar.monthrange(date_ask.year, date_ask.month)
         day_of_week = (date_ask.day + days_befor_month - 1) % 7
@@ -62,6 +62,8 @@ class ExerciceToDoService(ServiceWithPK):
             isouter=True
         ).filter(
             and_(
+                Schedule.user_id == user_id,
+
                 # byte compare day of week.
                 ExerciceToDo.days_of_week.op("&")(day_week_enum) > 0,
 

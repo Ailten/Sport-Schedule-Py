@@ -28,7 +28,7 @@ async function checkAnExo(target) {
     // make cooldown button (durring fetch call).
     target.setAttribute('cooldown-fetch', 'true');
 
-    await fetch('http://localhost:8000/checkExercice/checkAnExo', {
+    await fetch(`http://${window.location.host}/checkExercice/checkAnExo`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
